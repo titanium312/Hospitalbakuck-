@@ -117,12 +117,18 @@ class InformacionCorporativa extends LitElement {
 
               <aside class="fl w-100 w-40-l mt3 mt0-l">
                 <div class="card ring pa3 pa4-ns">
-                  <h3 class="f5 fw7 dark-blue">En cifras</h3>
+                  <h3 class="f5 fw7 dark-blue">Divicion de nuestro municipio Ayapel</h3>
                   <div class="mt3 cf">
                     <div class="fl w-50 pa2">
                       <div class="tc br3 bg-washed-blue pa3 ring">
                         <div class="f7 blue">Corregimientos</div>
                         <div class="mt1 f2 fw8 dark-blue">10</div>
+                      </div>
+                    </div>
+                    <div class="fl w-50 pa2">
+                      <div class="tc br3 bg-washed-blue pa3 ring">
+                        <div class="f7 blue">población 2025</div>
+                        <div class="mt1 f2 fw8 dark-blue">49,053</div>
                       </div>
                     </div>
                     <div class="fl w-50 pa2">

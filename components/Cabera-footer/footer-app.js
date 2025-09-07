@@ -15,18 +15,13 @@
         {
           titulo: 'Procesos destacados',
           enlaces: [
-            { label: 'Banco de Sangre', href: '#' },
-            { label: 'Banco de Leche Humana', href: '#' },
-            { label: 'Laboratorio de Cocreación', href: '#' },
-            { label: 'Centro de ensayos clínicos', href: '#' },
-            { label: 'Docencia - Servicio', href: '#' },
-            { label: 'Contratación', href: '#' },
+           
           ],
         },
         {
           titulo: 'Atención al ciudadano',
           enlaces: [
-            { label: 'Encuesta de usabilidad', href: '#' },
+           
             { label: 'Atención a niños y adolescentes', href: '#' },
             { label: 'Preguntas frecuentes', href: '#' },
             { label: 'Recepción de PQRSDF', href: '#' },

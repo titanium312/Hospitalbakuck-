@@ -1,149 +1,126 @@
 import { LitElement, html } from 'https://cdn.jsdelivr.net/npm/lit@3/+esm';
+import '../../herramienta/lectopdf.js';
 
-class AdministracionElement extends LitElement {
-  createRenderRoot(){ return this } // Light DOM → aplica Tachyons/Bulma
+/**
+ * AdministracionElement
+ * — Componente Lit que usa Tachyons para estilos (azules + blanco, amigable hospital).
+ * — Mantiene la integridad del texto tal cual fue entregado.
+ * — Ocupa todo el ancho disponible y presenta visores PDF en una grilla fluida.
+ *
+ * Requisitos externos: cargar Tachyons en la página contenedora:
+ * <link rel="stylesheet" href="https://unpkg.com/tachyons@4.12.0/css/tachyons.min.css">
+ */
+export class AdministracionElement extends LitElement {
+  // Usamos light DOM para que Tachyons aplique sin encapsulado Shadow
+  createRenderRoot() { return this; }
 
-  // --- ICONOS (inline SVG, reemplazo de lucide) ---
-  #iShield({size=20,color='currentColor'}={}){return html`<svg width=${size} height=${size} viewBox="0 0 24 24" fill="none" stroke=${color} stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`}
-  #iUsers({size=20,color='currentColor'}={}){return html`<svg width=${size} height=${size} viewBox="0 0 24 24" fill="none" stroke=${color} stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`}
-  #iClipboard({size=20,color='currentColor'}={}){return html`<svg width=${size} height=${size} viewBox="0 0 24 24" fill="none" stroke=${color} stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg>`}
-  #iBuilding({size=20,color='currentColor'}={}){return html`<svg width=${size} height=${size} viewBox="0 0 24 24" fill="none" stroke=${color} stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 3v18M17 3v18M3 8h18M3 12h18M3 16h18"/></svg>`}
+  render() {
+    return html`
+      <section class="w-100">
+        ${this.#styles()}
+        <!-- Banda superior en gradiente azul -->
+        <header class="hsja-banner w-100 pv4 pv5-ns ph3 ph4-ns">
+          <div class="center w-100">
+            <h1 class="hsja-titulo f2 f1-ns fw6 ma0 tc">Administración – Hospital San Jorge de Ayapel</h1>
+            <p class="white-90 f5 tc mt3 mb0">Estructura clara, amable y humana <span class="white-60">(azules & blanco)</span></p>
+          </div>
+        </header>
 
-  render(){
+        <main class="w-100 ph3 ph5-ns pv4">
+          <section class="hsja-card w-100 pa3 pa4-ns">
+            <div class="flex items-center justify-between mb3">
+              <h2 class="dark-blue fw7 f3 ma0">Administración</h2>
+              <span class="br-pill ph3 pv2 bg-washed-blue dark-blue fw6">HSJA</span>
+            </div>
+            <div class="hsja-divider mb3" role="presentation"></div>
+
+            <!-- Texto: integridad exacta -->
+            <article class="dark-gray f5 lh-copy">
+              <p class="mt0 mb3">
+El organigrama del Hospital San Jorge de Ayapel refleja la estructura jerárquica y funcional de la entidad, organizada para garantizar una gestión eficiente y la prestación de servicios de salud con calidad. En la parte directiva se ubican la Junta Directiva y la Gerencia, apoyadas por asesores y la oficina de Control Interno.
+              </p>
+              <p class="mt0 mb4">
+La estructura se articula en áreas estratégicas como Gestión de la Calidad, Prestación de Servicios, Talento Humano, Finanzas, Información y Comunicación, Servicios Generales y Seguridad y Salud en el Trabajo, cada una con equipos profesionales, técnicos y asistenciales que aseguran la atención integral al paciente.
+              </p>
+            </article>
+
+            <section aria-label="Documentos y anexos" class="mt3">
+              <h3 class="fw6 dark-blue f4 mb3">Documentos relacionados</h3>
+              <div class="hsja-pdf-grid">
+                <div class="hsja-card pa2">
+                  <lectot-wie aria-label="Conformación por nivel de la ESE HSJA"
+                    urlpdf="https://hospitalsanjorgeayapel.info/LectorPdf/pdfs/Conformaci%C3%B3n%20por%20nivel%20de%20la%20ESE%20HSJA.pdf"></lectot-wie>
+                </div>
+                <div class="hsja-card pa2">
+                  <lectot-wie aria-label="Anexo Junta Directiva"
+                    urlpdf="https://hospitalsanjorgeayapel.info/LectorPdf/pdfs/Anexo%20Junta%20Directiva.pdf"></lectot-wie>
+                </div>
+                <div class="hsja-card pa2">
+                  <lectot-wie aria-label="Conformación por nivel de la ESE HSJA (duplicado)"
+                    urlpdf="https://hospitalsanjorgeayapel.info/LectorPdf/pdfs/Conformaci%C3%B3n%20por%20nivel%20de%20la%20ESE%20HSJA.pdf"></lectot-wie>
+                </div>
+              </div>
+            </section>
+          </section>
+        </main>
+      </section>
+    `;
+  }
+
+  #styles() {
     return html`
       <style>
-        .bg-grad-hero{
-          background: radial-gradient(60% 60% at 50% 0%, #e0f2fe 0%, #ffffff 60%, #ffffff 100%);
+        /* Paleta amigable hospitalaria */
+        :root {
+          --hsja-azul-900: #0b2a59;  /* profundo */
+          --hsja-azul-700: #144f9b;  /* primario */
+          --hsja-azul-500: #1f7ae0;  /* vibrante */
+          --hsja-azul-300: #8ec5ff;  /* claro */
+          --hsja-azul-100: #eaf4ff;  /* fondo suave */
+          --hsja-blanco:   #ffffff;
         }
-        .fade-up{ opacity:0; transform: translateY(12px); animation: fadeUp .6s ease forwards; }
-        .fade-up.delay-1{ animation-delay: .1s }
-        @keyframes fadeUp{ to{ opacity:1; transform:none } }
-        .card{ background: rgba(255,255,255,.9); border:1px solid rgba(2,132,199,.15); border-radius: 1rem; box-shadow: 0 8px 24px rgba(2,8,20,.06); }
-        .ring-sky{ box-shadow: 0 0 0 1px rgba(2,132,199,.15) inset; }
-        .chip{ display:inline-flex; align-items:center; border-radius:9999px; background:#0284c7; color:#fff; font-weight:600; padding:.2rem .6rem; font-size:.75rem; box-shadow:0 4px 10px rgba(2,132,199,.25);}
-        .grad-line{ height:.25rem; width:5rem; border-radius:9999px; background:linear-gradient(90deg,#38bdf8,#1d4ed8); }
+        body { background: var(--hsja-blanco); }
+
+        .hsja-banner {
+          background: linear-gradient(90deg, var(--hsja-azul-700), var(--hsja-azul-500));
+        }
+        .hsja-titulo { color: #fff; text-shadow: 0 2px 10px rgba(0,0,0,0.15); }
+
+        .hsja-card {
+          background: var(--hsja-blanco);
+          border-radius: 1rem;
+          box-shadow: 0 6px 24px rgba(13, 71, 161, 0.08);
+          border: 1px solid rgba(20, 79, 155, 0.08);
+        }
+        .hsja-divider {
+          height: 1px;
+          background: linear-gradient(to right, transparent, rgba(20,79,155,0.25), transparent);
+        }
+
+        /* Rejilla fluida: usa todo el ancho disponible */
+        .hsja-pdf-grid {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 1.25rem;
+        }
+        @media (min-width: 48em) { /* ~768px */
+          .hsja-pdf-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (min-width: 75em) { /* ~1200px */
+          .hsja-pdf-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        /* Asegurar que el visor PDF aproveche el alto: */
+        lectot-wie {
+          display: block;
+          width: 100%;
+          height: 72vh; /* alto generoso para lectura */
+          border-radius: 0.75rem;
+          overflow: hidden;
+          background: var(--hsja-azul-100);
+          border: 1px solid rgba(31, 122, 224, 0.15);
+        }
       </style>
-
-      <div class="min-vh-100 bg-near-white dark-gray">
-        <!-- Hero -->
-        <section class="relative overflow-hidden bg-grad-hero">
-          <div class="mw8 center ph3 ph4-ns pv4 pv5-ns">
-            <div class="flex flex-column flex-row-l items-start-l gap3-l">
-              <div class="w-100 w-60-l fade-up">
-                <span class="chip">Institucional</span>
-                <h1 class="mt3 f2 f1-ns fw7 near-black lh-title">
-                  Mapa Conceptual Institucional – ESE HSJA
-                </h1>
-                <p class="mt2 mid-gray measure">
-                  Presentación ejecutiva del marco institucional, programas prioritarios y estructura organizacional para la gestión hospitalaria.
-                </p>
-              </div>
-
-              <div class="w-100 w-40-l fade-up delay-1">
-                <div class="card pa3 pa4-ns">
-                  <h3 class="f5 fw6 dark-gray mb3">Ficha documental</h3>
-                  <div class="grid">
-                    <div class="cf">
-                      <div class="fl w-100 w-50-m w-50-l pr2">
-                        <span class="db silver f6">Planeación – MIPG – SGC</span>
-                        <span class="db fw6 dark-gray">Código: PT-AD-PL-007</span>
-                      </div>
-                      <div class="fl w-100 w-50-m w-50-l pl2">
-                        <span class="db silver f6">Versión</span>
-                        <span class="db fw6 dark-gray">V.1</span>
-                      </div>
-                    </div>
-                    <div class="cf mt2">
-                      <div class="fl w-100 w-50-m w-50-l pr2">
-                        <span class="db silver f6">Página</span>
-                        <span class="db fw6 dark-gray">2 de 3</span>
-                      </div>
-                      <div class="fl w-100 w-50-m w-50-l pl2">
-                        <span class="db silver f6">Fecha de emisión</span>
-                        <span class="db fw6 dark-gray">18-08-2025</span>
-                      </div>
-                    </div>
-                    <div class="mt2">
-                      <span class="db silver f6">Título</span>
-                      <span class="db fw6 dark-gray">Anexo Junta Directiva – Directivos</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>  
-          </div>
-        </section>
-
-        <!-- Mapa Conceptual -->
-        <section class="mw8 center ph3 ph4-ns pb4 pb5-ns">
-          <div class="card pa3 pa4-ns fade-up">
-            <figure class="br3 overflow-hidden ring-sky">
-              <img src="https://hospitalsanjorgeayapel.info/LectorPdf/Img/mapa.png"
-                   alt="Mapa conceptual de la ESE HSJA"
-                   class="w-100 h-auto bg-near-white"/>
-            </figure>
-            <p class="tc f7 silver mt2">
-              Mapa conceptual institucional (versión vigente). Clic derecho para abrir en nueva pestaña y ver en tamaño completo.
-            </p>
-          </div>
-        </section>
-
-        <!-- Junta Directiva / Programas -->
-        <section class="mw8 center ph3 ph4-ns pb4 pb5-ns">
-          <div class="cf">
-            <!-- Junta Directiva -->
-            <div class="fl w-100 w-two-thirds-l pr0 pr3-l">
-              <div class="card pa3 pa4-ns mb3 fade-up">
-                <div class="flex items-center gap2 mb2">
-                  <span class="blue">${this.#iShield({size:20, color:'#0284c7'})}</span>
-                  <h2 class="f4 fw6 dark-gray ma0">Junta Directiva</h2>
-                </div>
-                <p class="mid-gray lh-copy">
-                  El actual Señor Gobernador, <strong>Doctor Erasmo Elías Zuleta Bechara</strong>, y el Alcalde, <strong>doctor Hugo Armando Pinedo Contreras</strong>, establecieron programas y objetivos transversales e intersectoriales por 5 ejes: Córdoba equitativa e incluyente, Córdoba primera en competitividad, Córdoba más sostenible, Córdoba segura en paz y con justicia, y Alianzas y fortalecimiento institucional.
-                </p>
-                <ul class="mt2 pl3">
-                  <li class="mid-gray lh-copy">Mejorar el acceso a programas de salud y ampliar la atención en todo el municipio.</li>
-                  <li class="mid-gray lh-copy">Garantizar derecho a vivir libre de enfermedades transmisibles y reducir riesgos.</li>
-                  <li class="mid-gray lh-copy">Fortalecer institucionalmente la red hospitalaria.</li>
-                </ul>
-              </div>
-            </div>
-
-            <!-- Aside: Programas / Subprogramas -->
-            <aside class="fl w-100 w-third-l mt3 mt0-l">
-              <div class="card pa3 pa4-ns mb3 fade-up">
-                <div class="flex items-center gap2">
-                  <span class="blue">${this.#iUsers({size:18, color:'#0284c7'})}</span>
-                  <h3 class="f5 fw6 dark-gray ma0">Programas Generales</h3>
-                </div>
-                <ul class="mt2 pl3 f6 mid-gray">
-                  <li>Cambio por la salud</li>
-                  <li>Cambio por la alimentación</li>
-                </ul>
-              </div>
-
-              <div class="card pa3 pa4-ns fade-up">
-                <div class="flex items-center gap2">
-                  <span class="blue">${this.#iClipboard({size:18, color:'#0284c7'})}</span>
-                  <h3 class="f5 fw6 dark-gray ma0">Subprogramas</h3>
-                </div>
-                <ul class="mt2 pl3 f6 mid-gray">
-                  <li>Aseguramiento por la vida</li>
-                  <li>Médico en tu casa</li>
-                  <li>Red pública hospitalaria para el cambio</li>
-                </ul>
-              </div>
-            </aside>
-          </div>
-        </section>
-
-        <!-- Footer -->
-        <footer class="bt b--black-10 bg-white">
-          <div class="mw8 center ph3 ph4-ns pv3 tc silver f7">
-            ESE Hospital San Jorge de Ayapel • Documento de divulgación institucional
-          </div>
-        </footer>
-      </div>
     `;
   }
 }
