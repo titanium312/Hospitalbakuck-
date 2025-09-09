@@ -54,19 +54,6 @@ class DirectorioInstitucional extends LitElement {
         </p>
       </section>
 
-      <section>
-        <div class="icon-title"><span class="emoji">🗂️</span> Plan de Cargos</div>
-        <p>
-          El Hospital cuenta con un plan de cargos vigente que organiza los empleos en distintos niveles (directivo, asesor, profesional, técnico, asistencial y trabajadores oficiales), asegurando una estructura clara y eficiente para la prestación de servicios de salud.
-        </p>
-      </section>
-
-      <section>
-        <div class="icon-title"><span class="emoji">💰</span> Escala Salarial</div>
-        <p>
-          La escala salarial define la remuneración de los servidores de acuerdo con su cargo y nivel, conforme a la normatividad nacional (<strong>Decreto 0611 de 2025</strong>), promoviendo equidad, legalidad y transparencia en la gestión del talento humano.
-        </p>
-      </section>
 
       <section>
         <p><strong>📄 Documento Anexo:</strong></p>

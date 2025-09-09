@@ -201,8 +201,8 @@ export class BloqueInformacion extends LitElement {
 
               <h3 style="font-size:1rem;margin-top:1rem;">Trámites destacados</h3>
               <ul class="list">
-                <li><a href="${this.sitio}historia-cl%C3%ADnica" target="_blank" rel="noopener">Historia clínica</a></li>
-                <li><a href="${this.sitio}pida-una-cita" target="_blank" rel="noopener">Pedir una cita</a></li>
+                <li><a href="#historia-clinica" target="_blank" rel="noopener">Historia clínica</a></li>
+                <li><a href="#pida-cita" target="_blank" rel="noopener">Pedir una cita</a></li>
                 <li><a href="${this.sitio}mapa-de-procesos" target="_blank" rel="noopener">Mapa de procesos</a></li>
               </ul>
             </article>
@@ -211,8 +211,8 @@ export class BloqueInformacion extends LitElement {
           <!-- Accesos rápidos -->
           <div class="quick-grid">
             <a class="quick" href="tel:${this.#tel(this.telefono1)}">Urgencias 24/7</a>
-            <a class="quick" href="${this.sitio}pida-una-cita" target="_blank" rel="noopener">Pedir cita</a>
-            <a class="quick" href="https://maps.google.com/?q=${encodeURIComponent(this.direccion)}" target="_blank" rel="noopener">Cómo llegar</a>
+            <a class="quick" href="#pida-cita" target="_blank" rel="noopener">Pedir cita</a>
+            <a class="quick" href="https://www.google.com/maps/place/8V64%2BQV,+Ayapel,+C%C3%B3rdoba/@8.3119391,-75.143578,18z/data=!3m1!4b1!4m5!3m4!1s0x8e5b84c65a6a840d:0x234ad73f3554f13!8m2!3d8.3119375!4d-75.1428125?entry=ttu&g_ep=EgoyMDI1MDkwMy4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener">Cómo llegar</a>
           </div>
         </div>
       </section>

@@ -16,6 +16,7 @@ import './Componentes/3-QuieneSomos/2-ResenaHistorica/ResenaHistoricas.js'
 import './Componentes/3-QuieneSomos/3-Administración/Administración.js'
 import './Componentes/3-QuieneSomos/4-Mapaprocesos/Mapaprocesos.js'
 import './Componentes/3-QuieneSomos/5-Distinciones/Distinciones.js'
+import './Componentes/3-QuieneSomos/6-Personal/Directorio.js'
 import './Componentes/3-QuieneSomos/6-Personal/Personal.js'
 import './Componentes/3-QuieneSomos/7-Normatividad/Normatividad.js'
 import './Componentes/3-QuieneSomos/8-Comunicaciones/Comunicaciones.js'
@@ -25,7 +26,7 @@ import './Componentes/4-AtencionCiudadano/1-Accesibilidad/Accesibilidad.js'
 import './Componentes/4-AtencionCiudadano/2-OrientacionUsuario/OrientacionUsuario.js'
 import './Componentes/4-AtencionCiudadano/3-Carta al trato digno/Cartaaltratodigno.js'
 import './Componentes/4-AtencionCiudadano/4-Pida una cita/Pidaunacita.js'
-import './Componentes/4-AtencionCiudadano/5-Historia clínica/Historiaclínica.js'
+import './Componentes/4-AtencionCiudadano/5-Tramites/Tramites.js'
 import './Componentes/4-AtencionCiudadano/6-Línea de transparencia/Lineadetransparencia.js'
 import './Componentes/4-AtencionCiudadano/7-Preguntas Frecuentes/PreguntasFrecuentes.js'
 import './Componentes/4-AtencionCiudadano/8-Cuidado del paciente/Cuidadodelpaciente.js'
@@ -37,17 +38,16 @@ import './Componentes/5-GestionIstitucional/P1TratamientodeDatos.js';
 import './Componentes/5-GestionIstitucional/P2-FinancierayContable.js';
 import './Componentes/5-GestionIstitucional/P3MetasIndicadores.js';
 import './Componentes/5-GestionIstitucional/P4ProtecciónUsodeDatos.js';
-import './Componentes/5-GestionIstitucional/P5Gestionycontrol.js';
+import './Componentes/5-GestionIstitucional/5-Gestionycontrol/P5Gestionycontrol.js';
+import './Componentes/5-GestionIstitucional/P5mipg.js';
 import './Componentes/5-GestionIstitucional/P6DerechosdeAutor.js';
 import './Componentes/5-GestionIstitucional/P7PoliticadeCookies.js';
 import './Componentes/5-GestionIstitucional/P8Procesosdisciplinarios.js';
-import './Componentes/5-GestionIstitucional/P9GestiónIntegral.js';
-import './Componentes/5-GestionIstitucional/P10ControlInterno.js';
 import './Componentes/5-GestionIstitucional/P11Referenciación.js';
 import './Componentes/5-GestionIstitucional/P12Bancodeproyectos.js';
 
 //----------------------------------------- extra
-
+import './Componentes/5,5-GestionConocimiento/gestion.js'
 import './Componentes/6-SERVICIOS/servicios.js'
 import './Componentes/7-Participa/Participa.js'
 import './Componentes/8-Transparencia/Transparencia.js'
@@ -94,6 +94,7 @@ class ContenedorApp extends LitElement {
       'mapa-de-procesos': html`<mapa-de-procesos></mapa-de-procesos>`,
       'distinciones': html`<distinciones-galeria></distinciones-galeria>`,
       'personal': html`<personal-app></personal-app>`,
+      'directorio': html`<directorio-institucional></directorio-institucional>`,
       'normatividad': html`<x-normatividad></x-normatividad>`,
       'comunicaciones': html`<comunicaciones-x></comunicaciones-x>`,
       'servicios': html`<servicios-element></servicios-element>`,
@@ -108,7 +109,7 @@ class ContenedorApp extends LitElement {
     'orientacion-usuario': html`<orientacionusuario-view></orientacionusuario-view>`,
     'carta-trato-digno': html`<cartaaltratodigno-view></cartaaltratodigno-view>`,
     'pida-cita': html`<pidaunacita-view></pidaunacita-view>`,
-    'historia-clinica': html`<historiaclinica-view></historiaclinica-view>`,
+    'tramites': html`<tramites-x></tramites-x>`,
     'linea-transparencia': html`<lineadetransparencia-view></lineadetransparencia-view>`,
     'preguntas-frecuentes': html`<preguntasfrecuentes-view></preguntasfrecuentes-view>`,
     'cuidado-paciente': html`<cuidadodelpaciente-view></cuidadodelpaciente-view>`,
@@ -120,17 +121,16 @@ class ContenedorApp extends LitElement {
       'metas-indicadores': html`<metas-indicadores-view></metas-indicadores-view>`,
       'proteccion-datos': html`<proteccion-datos></proteccion-datos>`,
       'gestion-control': html`<gestion-control></gestion-control>`,
+      'mipg': html`<x-mipg></x-mipg>`,
       'derechos-autor': html`<derechosde-autor-view></derechosde-autor-view>`,
       'politica-cookies': html`<politica-cookies></politica-cookies>`,
       'procesos-disciplinarios': html`<procesosdisciplinarios-view></procesosdisciplinarios-view>`,
-      'gestion-integral': html`<gestion-integral-view></gestion-integral-view>`,
-      'control-interno': html`<control-interno-view></control-interno-view>`,
       'referenciacion': html`<referenciacion-view></referenciacion-view>`,
       'banco-proyectos': html`<bancodeproyectos-view></bancodeproyectos-view>`,
 
 
       // ---------------------
-
+      'gestion': html`<gestion-x></gestion-x>`,
       'servicios': html`<servicios-x></servicios-x>`,
       'participa': html`<participa-x></participa-x>`,
       'transparencia': html`<transparencia-x></transparencia-x>`

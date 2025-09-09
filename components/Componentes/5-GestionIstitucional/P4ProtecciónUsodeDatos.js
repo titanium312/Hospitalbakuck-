@@ -32,7 +32,7 @@
           publica: '18/07/2024',
           descargas: 132,
           vistas: 26,
-          url: 'https://www.minjusticia.gov.co/ministerio/Documents/SIG/_pol%C3%ADtica%20de%20tratamiento%20y%20protecci%C3%B3n%20datos%20personales.pdf',
+          url: 'https://hospitalsanjorgeayapel.info/LectorPdf/pdfs/Pol%C3%ADtica%20de%20Protecci%C3%B3n%20y%20Uso%20de%20Datos.pdf',
           formato: 'PDF'
         }
       ];

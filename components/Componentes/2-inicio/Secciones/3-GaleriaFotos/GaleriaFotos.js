@@ -144,30 +144,79 @@ class GaleriaEstreno extends LitElement {
     this._tick = null;
     // Slides por defecto (puedes pasarlos como atributo .slides también)
     this.slides = [
-      {
-        src: 'https://images.unsplash.com/photo-1580281657527-47e6ba6dbf9b?q=80&w=1600',
-        title: 'Cuidado de la salud',
-        caption: 'Atención médica excepcional para toda la familia',
-        badge: 'Salud',
-        ctaHref: 'https://wa.me/573001112233',
-        ctaLabel: 'Contáctanos',
-      },
-      {
-        src: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=1600',
-        title: 'Resultados en línea',
-        caption: 'Consulta tus exámenes de laboratorio desde casa',
-        badge: 'Nuevo',
-        ctaHref: '/pacientes/resultados',
-        ctaLabel: 'Ver resultados',
-      },
-      {
-        src: 'https://images.unsplash.com/photo-1584515933487-779824d29309?q=80&w=1600',
-        title: 'Citas disponibles',
-        caption: 'Agenda tu consulta externa en minutos',
-        badge: 'Hoy',
-        ctaHref: '/pacientes/citas',
-        ctaLabel: 'Agendar',
-      },
+       {
+    src: 'https://hospitalsanjorgeayapel.info/LectorPdf/Img/Apoyos%20Servicios%20Generales.jpeg',
+    title: 'Apoyos Servicios Generales',
+    caption: 'Comprometidos con el bienestar y la atención integral',
+    badge: 'Salud',
+    ctaHref: '#inicio',
+    ctaLabel: 'Contáctanos',
+  },
+  {
+    src: 'https://hospitalsanjorgeayapel.info/LectorPdf/Img/escudo%20ayapel.png',
+    title: 'Identidad institucional',
+    caption: 'Orgullosos de servir a la comunidad de Ayapel',
+    badge: 'Institucional',
+    ctaHref: '#info-corporativa',
+    ctaLabel: 'Conócenos',
+  },
+  {
+    src: 'https://hospitalsanjorgeayapel.info/LectorPdf/Img/Facturación%20y%20Admisiones.jpeg',
+    title: 'Facturación y Admisiones',
+    caption: 'Atención rápida y eficiente en procesos administrativos',
+    badge: 'Atención',
+    ctaHref: '#administracion',
+    ctaLabel: 'Más información',
+  },
+  {
+    src: 'https://hospitalsanjorgeayapel.info/LectorPdf/Img/Laboratorio.jpeg',
+    title: 'Laboratorio',
+    caption: 'Resultados confiables y tecnología moderna a tu alcance',
+    badge: 'Nuevo',
+    ctaHref: '/pacientes/resultados',
+    ctaLabel: '',
+  },
+
+  {
+    src: 'google.com/maps/place/8V64%2BQV,+Ayapel,+Córdoba/@8.3119391,-75.143578,18z/data=!3m1!4b1!4m5!3m4!1s0x8e5b84c65a6a840d:0x234ad73f3554f13!8m2!3d8.3119375!4d-75.1428125?entry=ttu&g_ep=EgoyMDI1MDkwMy4wIKXMDSoASAFQAw%3D%3D',
+    title: 'Ubicación',
+    caption: 'Encuéntranos fácilmente en Ayapel',
+    badge: 'Mapa',
+    ctaHref: 'google.com/maps/place/8V64%2BQV,+Ayapel,+Córdoba/@8.3119391,-75.143578,18z/data=!3m1!4b1!4m5!3m4!1s0x8e5b84c65a6a840d:0x234ad73f3554f13!8m2!3d8.3119375!4d-75.1428125?entry=ttu&g_ep=EgoyMDI1MDkwMy4wIKXMDSoASAFQAw%3D%3D',
+    ctaLabel: 'Cómo llegar',
+  },
+  {
+    src: 'https://hospitalsanjorgeayapel.info/LectorPdf/Img/Nuestra%20Gente.jpeg',
+    title: 'Nuestra Gente',
+    caption: 'Un equipo humano al servicio de la comunidad',
+    badge: 'Equipo',
+    ctaHref: '/#distinciones',
+    ctaLabel: 'Conócelos',
+  },
+  {
+    src: 'https://hospitalsanjorgeayapel.info/LectorPdf/Img/Nuestras%20Acciones%20en%20Salud.jpeg',
+    title: 'Nuestras Acciones en Salud',
+    caption: 'Trabajamos por el bienestar integral de los pacientes',
+    badge: 'Salud',
+    ctaHref: '/#distinciones',
+    ctaLabel: 'Ver más',
+  },
+  {
+    src: 'https://hospitalsanjorgeayapel.info/LectorPdf/Img/Odontologia.jpeg',
+    title: 'Odontología',
+    caption: 'Sonrisas saludables con atención profesional',
+    badge: 'Hoy',
+    ctaHref: '/#pida-cita',
+    ctaLabel: 'Agendar cita',
+  },
+  {
+    src: 'https://hospitalsanjorgeayapel.info/LectorPdf/Img/Urgencias.jpeg',
+    title: 'Urgencias',
+    caption: 'Atención inmediata y especializada las 24 horas',
+    badge: 'Urgente',
+    ctaHref: '/#servicios',
+    ctaLabel: 'Ver servicios',
+  },
     ];
   }
 

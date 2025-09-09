@@ -1,6 +1,5 @@
 // app.js
 import { LitElement, html, css } from 'https://cdn.jsdelivr.net/npm/lit@3/+esm';
-import "./Directorio.js"
 
 class AspirantesApp extends LitElement {
   static styles = css`
@@ -145,7 +144,56 @@ class AspirantesApp extends LitElement {
             para consulta ciudadana en el sistema oficial de la Presidencia de la República de Colombia.
           </p>
 
+
+
+
+<section>
+        <p><strong>Directorio Institucional Por Proceso HSJA</strong></p>
+        <lectot-wie urlpdf="https://hospitalsanjorgeayapel.info/LectorPdf/pdfs/Directorio%20Institucional%20Por%20Proceso%20HSJA.pdf"></lectot-wie>
+      </section>
+
+      <section>
+        <div class="icon-title"><span class="emoji">🗂️</span> Plan de Cargos</div>
+        <p>
+          El Hospital cuenta con un plan de cargos vigente que organiza los empleos en distintos niveles (directivo, asesor, profesional, técnico, asistencial y trabajadores oficiales), asegurando una estructura clara y eficiente para la prestación de servicios de salud.
+        </p>
+
+ <section>
+        <p><strong>PLAN DE CARGOS ESE HOSPITAL SAN JORGE VIGENCIA 2024 - 2025</strong></p>
+        <lectot-wie urlpdf="https://hospitalsanjorgeayapel.info/LectorPdf/pdfs/PLAN%20DE%20CARGOS%20ESE%20HOSPITAL%20SAN%20JORGE%20VIGENCIA%202024.pdf"></lectot-wie>
+      </section>
+
+
+      </section>
+
+      <section>
+        <div class="icon-title"><span class="emoji">💰</span> Escala Salarial</div>
+        <p>
+          La escala salarial define la remuneración de los servidores de acuerdo con su cargo y nivel, conforme a la normatividad nacional (<strong>Decreto 0611 de 2025</strong>), promoviendo equidad, legalidad y transparencia en la gestión del talento humano.
+        </p>
+
+      <section>
+        <p><strong>Escala Salarial segun CategorÌas </strong></p>
+        <lectot-wie urlpdf="https://hospitalsanjorgeayapel.info/LectorPdf/pdfs/Anexo%20Escala%20Salarial%20seg%C3%BAn%20Categor%C3%ADas.pdf"></lectot-wie>
+      </section>
+
+        
+      </section>
+
+
+
+
           <p><strong>Puedes acceder directamente al portal aquí:</strong></p>
+
+
+
+           <section>
+        <p><strong>Anexo Relación de Contratistas Objeto del contrato y fechas de inicio</strong></p>
+        <lectot-wie urlpdf="https://hospitalsanjorgeayapel.info/LectorPdf/pdfs/Anexo%20Relaci%C3%B3n%20de%20Contratistas%20Objeto%20del%20contrato%20y%20fechas%20de%20inicio.pdf"></lectot-wie>
+      </section>   
+
+
+
 
           <div class="actions">
             <a href="https://aspirantes.presidencia.gov.co" target="_blank" class="button-link">
@@ -153,18 +201,9 @@ class AspirantesApp extends LitElement {
             </a>
           </div>
 
-          <!-- Botón para mostrar/ocultar directorio -->
-          <div class="actions">
-            <button class="toggle-btn" @click=${this.toggleDirectorio}>
-              ${this.showDirectorio ? 'Ocultar Directorio Institucional' : 'Ver Directorio Institucional'}
-            </button>
-          </div>
+         
 
-          <!-- Contenedor plegable -->
-          <div class="accordion ${this.showDirectorio ? 'open' : ''}">
-            <directorio-institucional></directorio-institucional>
-          </div>
-        </div>
+          
       </section>
     `;
   }

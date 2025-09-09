@@ -13,7 +13,7 @@ export class TratamientodeDatos extends LitElement {
       created: '2020-05-25',
       published: '2024-07-18',
       size: '0.08 MB',
-      url: 'https://www.mintic.gov.co/portal/715/articles-204666_recurso_3.pdf',
+      url: 'https://hospitalsanjorgeayapel.info/LectorPdf/pdfs/Pol%C3%ADtica%20Tratamiento%20de%20Datos%20Personales.pdf',
       downloads: 132,
       views: 18,
     };

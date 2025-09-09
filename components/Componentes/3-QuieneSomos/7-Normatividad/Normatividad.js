@@ -38,7 +38,7 @@ Normatividad:
             <!-- Acceso rápido a SUIN -->
             <div class="tc mb4">
               <a class="no-underline br3 ph4 pv3 white fw6 bg-blue grow" target="_blank" rel="noopener"
-                 href="https://www.suin-juriscol.gov.co/">Ir a la plataforma SUIN</a>
+                 href="https://portalsuin.icbf.gov.co/sites/suin">Ir a la plataforma SUIN</a>
             </div>
 
             <!-- Visor PDF -->

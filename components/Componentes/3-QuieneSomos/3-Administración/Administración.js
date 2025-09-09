@@ -49,7 +49,7 @@ La estructura se articula en áreas estratégicas como Gestión de la Calidad, P
               <div class="hsja-pdf-grid">
                 <div class="hsja-card pa2">
                   <lectot-wie aria-label="Conformación por nivel de la ESE HSJA"
-                    urlpdf="https://hospitalsanjorgeayapel.info/LectorPdf/pdfs/Conformaci%C3%B3n%20por%20nivel%20de%20la%20ESE%20HSJA.pdf"></lectot-wie>
+                    urlpdf="https://hospitalsanjorgeayapel.info/LectorPdf/pdfs/Anexo%20Organigrama%20Institucional%20HSJA.pdf"></lectot-wie>
                 </div>
                 <div class="hsja-card pa2">
                   <lectot-wie aria-label="Anexo Junta Directiva"
