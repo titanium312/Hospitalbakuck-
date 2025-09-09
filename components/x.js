@@ -2,6 +2,8 @@
 
 // app.js
 import { LitElement, html } from 'https://cdn.jsdelivr.net/npm/lit@3/+esm'
+
+
 import './Componentes/1-Menu/menu-superior.js'
 
 // IMPORTANTE: evita espacios/acentos en rutas reales del filesystem
@@ -62,6 +64,8 @@ class ContenedorApp extends LitElement {
   }
   createRenderRoot() { return this }
 
+
+  
   setActiveView(view) { this.activeView = view; location.hash = `#${view}` }
 
   _applyHash() {
