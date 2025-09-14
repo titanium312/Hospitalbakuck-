@@ -202,7 +202,7 @@ class VideoPanel extends LitElement {
           poster="/poster-hospital.jpg"
         >
           <source
-            src="https://cdn.pixabay.com/video/2025/06/01/282995_large.mp4"
+            src="https://hospitalsanjorgeayapel.info/LectorPdf/Img/HOSPITAL%20MEDICAL%20STAFF%20DOCTORS%20CORRIDOR%204K%20-%20Medicine%20live%20%281080p%2C%20h264%29.mp4"
             type="video/webm"
           />
           Tu navegador no soporta video.
@@ -229,24 +229,12 @@ class VideoPanel extends LitElement {
               </p>
 
               <div class="actions">
-                <a href="/pacientes/citas" class="btn btn--primary">Agendar cita</a>
-                <a href="https://wa.me/573001112233" target="_blank" rel="noopener noreferrer" class="btn btn--ghost">WhatsApp</a>
-                <a href="tel:123" class="btn btn--ghost">Emergencias 24/7</a>
+                <a href="#pida-cita" class="btn btn--primary">Agendar cita</a>
+                <a href="https://wa.me/3147989334" target="_blank" rel="noopener noreferrer" class="btn btn--ghost">WhatsApp</a>
+                <a href="tel:7705083" class="btn btn--ghost">Emergencias 24/7</a>
               </div>
 
-              <div class="stats">
-                <div class="stat">
-                  <p class="stat__value">15+</p>
-                  <p class="stat__label">Especialidades médicas</p>
-                </div>
-                <div class="stat">
-                  <p class="stat__value">12k</p>
-                  <p class="stat__label">Pacientes atendidos</p>
-                </div>
-                <div class="stat">
-                  <p class="stat__value">4.8/5</p>
-                  <p class="stat__label">Satisfacción promedio</p>
-                </div>
+              
               </div>
             </div>
           </div>

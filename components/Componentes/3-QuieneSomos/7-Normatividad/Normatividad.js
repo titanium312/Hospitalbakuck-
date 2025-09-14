@@ -1,5 +1,6 @@
 import { LitElement, html } from 'https://cdn.jsdelivr.net/npm/lit@3/+esm';
 import '../../herramienta/lectopdf.js';
+import '../../herramienta/dictador.js';
 
 /**
  * <x-normatividad>
@@ -26,26 +27,28 @@ export class XNormatividad extends LitElement {
           </div>
         </div>
 
-        <!-- Contenido principal: tarjeta amplia -->
+        <!-- Contenido principal: tarjeta amplia con dictado -->
         <div class="w-100 ph3 ph5-ns pv4">
           <article class="hsja-card w-100 pa3 pa4-ns center animate-slide-up">
-            <!-- Texto exacto (integridad respetada) -->
-            <p class="dark-gray f5 lh-copy mt0 mb4">
+            <dictador-tts ui lang="es-CO" rate="1" pitch="1">
+              <!-- Texto exacto (integridad respetada) -->
+              <p class="dark-gray f5 lh-copy mt0 mb4">
 Normatividad:
  Encontraras la normatividad relacionada a traves   de un normograma, un documento con las principales normas por componente y un   boton de enlace con la plataforma SUIN     
-            </p>
+              </p>
 
-            <!-- Acceso rápido a SUIN -->
-            <div class="tc mb4">
-              <a class="no-underline br3 ph4 pv3 white fw6 bg-blue grow" target="_blank" rel="noopener"
-                 href="https://portalsuin.icbf.gov.co/sites/suin">Ir a la plataforma SUIN</a>
-            </div>
+              <!-- Acceso rápido a SUIN -->
+              <div class="tc mb4">
+                <a class="no-underline br3 ph4 pv3 white fw6 bg-blue grow" target="_blank" rel="noopener"
+                  href="https://portalsuin.icbf.gov.co/sites/suin">Ir a la plataforma SUIN</a>
+              </div>
 
-            <!-- Visor PDF -->
-            <div class="hsja-pdf-wrap">
-              <lectot-wie aria-label="Normatividad SUIN"
-                urlpdf="https://hospitalsanjorgeayapel.info/LectorPdf/pdfs/Normatividad%20SUIN.pdf"></lectot-wie>
-            </div>
+              <!-- Visor PDF -->
+              <div class="hsja-pdf-wrap">
+                <lectot-wie aria-label="Normatividad SUIN"
+                  urlpdf="https://hospitalsanjorgeayapel.info/LectorPdf/pdfs/Normatividad%20SUIN.pdf"></lectot-wie>
+              </div>
+            </dictador-tts>
           </article>
         </div>
       </section>

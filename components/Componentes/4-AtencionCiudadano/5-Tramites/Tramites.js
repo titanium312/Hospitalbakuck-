@@ -1,4 +1,5 @@
 import { LitElement, html, css } from 'https://cdn.jsdelivr.net/npm/lit@3/+esm';
+import '../../herramienta/dictador.js'; // define <dictador-tts>
 
 /**
  * <tramites-hsja>
@@ -86,38 +87,44 @@ export class TramitesHsja extends LitElement {
 
   render(){
     return html`
-      <section class="section">
-        <h1>Trámites del HSJA</h1>
-        <div class="cards">
-          ${this.card('modalNacido', 'baby', 'Certificado de Nacido Vivo')}
-          ${this.card('modalDefuncion', 'cross', 'Certificado de Defunción')}
-          ${this.card('modalHistoria', 'file-med', 'Historia Clínica')}
-          ${this.card('modalLaboral', 'brief', 'Certificado Laboral')}
-          ${this.card('modalMedicamentos', 'pills', 'Dispensación de Medicamentos')}
-          ${this.card('modalUrgencias', 'truck-med', 'Atención Inicial de Urgencias')}
-          ${this.card('modalVacunacion', 'syringe', 'Certificado de Vacunación')}
-          ${this.card('modalCarnetCrec', 'child', 'Carné de Crecimiento y Desarrollo')}
-          ${this.card('modalPrenatal', 'female', 'Carné de Cuidado Prenatal')}
-          ${this.card('modalPQRSD', 'envelope', 'Radicación de PQRSD')}
-          ${this.card('modalCitas', 'calendar', 'Asignación de Citas Médicas')}
-        </div>
-      </section>
+      <!-- Barra TTS EXTERNA: lee TODO lo visible dentro de #main-content -->
+      <dictador-tts ui text-src="#main-content" lang="es-CO" rate="1" pitch="1"></dictador-tts>
 
-      ${this.modalesTramites()}
+      <!-- Envolvemos el contenido principal para que la barra externa tenga un target limpio -->
+      <div id="main-content">
+        <section class="section">
+          <h1>Trámites del HSJA</h1>
+          <div class="cards">
+            ${this.card('modalNacido', 'baby', 'Certificado de Nacido Vivo')}
+            ${this.card('modalDefuncion', 'cross', 'Certificado de Defunción')}
+            ${this.card('modalHistoria', 'file-med', 'Historia Clínica')}
+            ${this.card('modalLaboral', 'brief', 'Certificado Laboral')}
+            ${this.card('modalMedicamentos', 'pills', 'Dispensación de Medicamentos')}
+            ${this.card('modalUrgencias', 'truck-med', 'Atención Inicial de Urgencias')}
+            ${this.card('modalVacunacion', 'syringe', 'Certificado de Vacunación')}
+            ${this.card('modalCarnetCrec', 'child', 'Carné de Crecimiento y Desarrollo')}
+            ${this.card('modalPrenatal', 'female', 'Carné de Cuidado Prenatal')}
+            ${this.card('modalPQRSD', 'envelope', 'Radicación de PQRSD')}
+            ${this.card('modalCitas', 'calendar', 'Asignación de Citas Médicas')}
+          </div>
+        </section>
 
-      <section class="section">
-        <h1>PQRSDF EN LINEA - HSJA</h1>
-        <div class="cards pqrs">
-          <article class="card">
-            ${this.ic('mail-open')}
-            <h3>PQRSDF</h3>
-            <button class="btn" @click=${() => this.open('modalPQRS')}>Abrir formulario</button>
-          </article>
-        </div>
-      </section>
+        ${this.modalesTramites()}
 
-      ${this.modalPQRS()}
-      ${this.modalAcuse()}
+        <section class="section">
+          <h1>PQRSDF EN LINEA - HSJA</h1>
+          <div class="cards pqrs">
+            <article class="card">
+              ${this.ic('mail-open')}
+              <h3>PQRSDF</h3>
+              <button class="btn" @click=${() => this.open('modalPQRS')}>Abrir formulario</button>
+            </article>
+          </div>
+        </section>
+
+        ${this.modalPQRS()}
+        ${this.modalAcuse()}
+      </div>
     `;
   }
 
@@ -137,7 +144,13 @@ export class TramitesHsja extends LitElement {
         <div class="modal-content">
           <button class="close" aria-label="Cerrar" @click=${this.closeAll}>&times;</button>
           <h3 id="${id}-title">${title}</h3>
-          ${content}
+
+          <!-- Barra TTS DENTRO DEL MODAL (lee sólo su contenido) -->
+          <dictador-tts ui text-src="#${id}-content" lang="es-CO" rate="1" pitch="1"></dictador-tts>
+
+          <div id="${id}-content">
+            ${content}
+          </div>
         </div>
       </div>
     `;

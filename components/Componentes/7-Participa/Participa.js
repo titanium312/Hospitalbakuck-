@@ -1,5 +1,7 @@
 import { LitElement, html } from 'https://cdn.jsdelivr.net/npm/lit@3/+esm';
-import './contenido/canal-interaccion.js'
+import '../herramienta/dictador.js';
+import './contenido/canal-interaccion.js';
+
 export class Participa extends LitElement {
   // Light DOM para usar tu sistema de estilos global (Tachyons, etc.)
   createRenderRoot() { return this; }
@@ -94,7 +96,6 @@ export class Participa extends LitElement {
           quienes podrán participar en la identificación de necesidades, espacios de diálogo y convocatorias.
         </p>
 
-        
         <div class="px-cols">
           <div class="px-col">
             <h3 class="px-subtitle">Espacios donde puede participar:</h3>
@@ -328,10 +329,7 @@ export class Participa extends LitElement {
 
   // ===== Canal de Interacción Deliberatoria =====
   _Canaldeinteraccion() {
-    const img = this.hospitalImages[this.currentImage];
-    return html`
-    <canal-interaccion></canal-interaccion>
-    `;
+    return html`<canal-interaccion></canal-interaccion>`;
   }
 
   // ===== Iconos simples (SVG inline) =====
@@ -505,12 +503,13 @@ export class Participa extends LitElement {
         .px-btn--full { width: 100%; }
       </style>
 
-      <section class="px">
-        <div class="px-container">
-          <h1 class="px-title">Menú Participa – Hospital San Jorge de Ayapel</h1>
+      <!-- ✅ Envoltura para TTS con controles de UI; no altera estilos internos -->
+      <dictador-tts ui lang="es-CO" rate="0.95" pitch="1" volume="1">
+        <section class="px">
+          <div class="px-container">
+            <h1 class="px-title">Menú Participa – Hospital San Jorge de Ayapel</h1>
 
-
-          <div class="notice" aria-labelledby="hsja-aviso-title">
+            <div class="notice" aria-labelledby="hsja-aviso-title">
               <h2 id="hsja-aviso-title">Cordialmente, Hospital San Jorge de Ayapel – Comprometidos con la Transparencia y la Participación</h2>
               <p>El Hospital San Jorge de Ayapel (HSJA), en medio de los desafíos financieros que enfrentamos, reafirma su compromiso con la transparencia, la participación ciudadana y el control social.</p>
               <p>Creemos firmemente que el camino para superar las dificultades se construye junto a la comunidad, escuchando sus voces, atendiendo sus inquietudes y trabajando unidos por un hospital más fuerte y humano.</p>
@@ -527,15 +526,15 @@ export class Participa extends LitElement {
               <p>💙 Tu participación es la fuerza que necesitamos para seguir adelante.</p>
             </div>
 
+            ${this._tabs()}
 
-          ${this._tabs()}
-
-          <div class="px-panel">
-            <h2 class="px-title2">${this._labels[this.active]}</h2>
-            ${this._renderActive()}
+            <div class="px-panel">
+              <h2 class="px-title2">${this._labels[this.active]}</h2>
+              ${this._renderActive()}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </dictador-tts>
     `;
   }
 }

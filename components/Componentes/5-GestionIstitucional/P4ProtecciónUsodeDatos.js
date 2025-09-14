@@ -1,77 +1,79 @@
+import { LitElement, html } from 'https://cdn.jsdelivr.net/npm/lit@3/+esm';
+import '../herramienta/dictador.js'; // ⬅️ habilita <dictador-tts> y la API de voz
 
-  import { LitElement, html } from 'https://cdn.jsdelivr.net/npm/lit@3/+esm';
+export class Protecci extends LitElement {
+  createRenderRoot() { return this; } // Light DOM para Tachyons
 
-  export class Protecci extends LitElement {
-    createRenderRoot() { return this; } // Light DOM para Tachyons
+  static properties = {
+    titulo: { type: String },
+    descripcion: { type: String },
+    categoria: { type: String },
+    tipoDoc: { type: String },
+    items: { type: Array }, // [{nombre, descripcion, peso, expide, publica, descargas, vistas, url}]
+    mostrar: { type: Number }, // cantidad a mostrar
+    mostrarSelector: { type: Boolean }, // si muestras el selector "Mostrar N resultados"
+  };
 
-    static properties = {
-      titulo: { type: String },
-      descripcion: { type: String },
-      categoria: { type: String },
-      tipoDoc: { type: String },
-      items: { type: Array }, // [{nombre, descripcion, peso, expide, publica, descargas, vistas, url}]
-      mostrar: { type: Number }, // cantidad a mostrar
-      mostrarSelector: { type: Boolean }, // si muestras el selector "Mostrar N resultados"
-    };
+  constructor() {
+    super();
+    this.titulo = 'Política de protección y uso de datos personales';
+    this.descripcion = 'Documento que establece lineamientos para la recolección, manejo y protección de datos en cumplimiento de la Ley 1581 de 2012.';
+    this.categoria = 'Política de protección y uso de datos personales';
+    this.tipoDoc = 'Tipo no definido';
+    this.mostrar = 10;
+    this.mostrarSelector = true;
 
-    constructor() {
-      super();
-      this.titulo = 'Política de protección y uso de datos personales';
-      this.descripcion = 'Documento que establece lineamientos para la recolección, manejo y protección de datos en cumplimiento de la Ley 1581 de 2012.';
-      this.categoria = 'Política de protección y uso de datos personales';
-      this.tipoDoc = 'Tipo no definido';
-      this.mostrar = 10;
-      this.mostrarSelector = true;
+    this.items = [
+      {
+        nombre: 'Política de Protección de Datos Personales.pdf',
+        descripcion: 'Política de Protección de Datos Personales',
+        peso: '0.10 MB',
+        expide: '10/02/2023',
+        publica: '18/07/2024',
+        descargas: 132,
+        vistas: 26,
+        url: 'https://hospitalsanjorgeayapel.info/LectorPdf/pdfs/Pol%C3%ADtica%20de%20Protecci%C3%B3n%20y%20Uso%20de%20Datos.pdf',
+        formato: 'PDF'
+      }
+    ];
+  }
 
-      this.items = [
-        {
-          nombre: 'Política de Protección de Datos Personales.pdf',
-          descripcion: 'Política de Protección de Datos Personales',
-          peso: '0.10 MB',
-          expide: '10/02/2023',
-          publica: '18/07/2024',
-          descargas: 132,
-          vistas: 26,
-          url: 'https://hospitalsanjorgeayapel.info/LectorPdf/pdfs/Pol%C3%ADtica%20de%20Protecci%C3%B3n%20y%20Uso%20de%20Datos.pdf',
-          formato: 'PDF'
-        }
-      ];
-    }
+  #onChangeMostrar(e) {
+    const val = parseInt(e.target.value, 10);
+    if (!Number.isNaN(val)) this.mostrar = val;
+    this.requestUpdate();
+  }
 
-    #onChangeMostrar(e) {
-      const val = parseInt(e.target.value, 10);
-      if (!Number.isNaN(val)) this.mostrar = val;
-      this.requestUpdate();
-    }
+  render() {
+    const lista = (this.items || []).slice(0, this.mostrar);
 
-    render() {
-      const lista = (this.items || []).slice(0, this.mostrar);
-
-      return html`
-        <style>
-          .pdx {
-            --pdx-accent: #0e8a6a;
-            --pdx-muted: #4b5563;
-            color: #1f2937;
-          }
-          .pdx .pdx-card {
-            border: 1px solid rgba(0,0,0,.07);
-            border-radius: 1rem;
-            box-shadow: 0 4px 18px rgba(0,0,0,.06);
-            background: #fff;
-          }
-          .pdx .pdx-chip { background: rgba(14,138,106,.1); color: var(--pdx-accent); }
-          .pdx .pdx-link { color: var(--pdx-accent); text-decoration: underline; }
-          .pdx .pdx-link:hover { text-decoration: none; }
-          .pdx .pdx-meta dt { color: var(--pdx-muted); }
-          @media (prefers-color-scheme: dark) {
-            .pdx { color: #e5e7eb; }
-            .pdx .pdx-card { background: #111827; border-color: rgba(255,255,255,.06); }
-            .pdx .pdx-meta dt { color: #9ca3af; }
-          }
-        </style>
-
+    return html`
+      <!-- Barra de control TTS + contenido leíble -->
+      <dictador-tts ui lang="es-CO" rate="0.95" pitch="1" volume="1">
         <section class="pdx mw8 center pa3 pa4-ns">
+          <style>
+            .pdx {
+              --pdx-accent: #0e8a6a;
+              --pdx-muted: #4b5563;
+              color: #1f2937;
+            }
+            .pdx .pdx-card {
+              border: 1px solid rgba(0,0,0,.07);
+              border-radius: 1rem;
+              box-shadow: 0 4px 18px rgba(0,0,0,.06);
+              background: #fff;
+            }
+            .pdx .pdx-chip { background: rgba(14,138,106,.1); color: var(--pdx-accent); }
+            .pdx .pdx-link { color: var(--pdx-accent); text-decoration: underline; }
+            .pdx .pdx-link:hover { text-decoration: none; }
+            .pdx .pdx-meta dt { color: var(--pdx-muted); }
+            @media (prefers-color-scheme: dark) {
+              .pdx { color: #e5e7eb; }
+              .pdx .pdx-card { background: #111827; border-color: rgba(255,255,255,.06); }
+              .pdx .pdx-meta dt { color: #9ca3af; }
+            }
+          </style>
+
           <!-- Header -->
           <header class="mb3 mb4-ns">
             <h1 class="f3 f2-ns fw7 mv2">${this.titulo}</h1>
@@ -111,7 +113,7 @@
 
           <!-- Lista -->
           <div role="list" aria-label="Resultados de documentos">
-            ${lista.map((d, i) => html`
+            ${lista.map((d) => html`
               <article role="listitem" class="pdx-card pa3 pa4-ns mb3">
                 <div class="flex items-start justify-between">
                   <div>
@@ -165,20 +167,19 @@
             `)}
           </div>
         </section>
-      `;
-    }
-
-    // Filtrado simple por texto sobre nombre y descripción
-    #filtrar = (e) => {
-      const q = (e.target.value || '').toLowerCase();
-      this.items = this.items.map(x => ({ ...x, __hide: q && !(`${x.nombre} ${x.descripcion}`.toLowerCase().includes(q)) }));
-      // reordenar: visibles primero
-      const visibles = this.items.filter(x => !x.__hide);
-      const ocultos  = this.items.filter(x => x.__hide);
-      this.items = [...visibles, ...ocultos];
-      this.requestUpdate();
-    }
+      </dictador-tts>
+    `;
   }
 
-  customElements.define('proteccion-datos', Protecci);
+  // Filtrado simple por texto sobre nombre y descripción
+  #filtrar = (e) => {
+    const q = (e.target.value || '').toLowerCase();
+    this.items = this.items.map(x => ({ ...x, __hide: q && !(`${x.nombre} ${x.descripcion}`.toLowerCase().includes(q)) }));
+    const visibles = this.items.filter(x => !x.__hide);
+    const ocultos  = this.items.filter(x => x.__hide);
+    this.items = [...visibles, ...ocultos];
+    this.requestUpdate();
+  }
+}
 
+customElements.define('proteccion-datos', Protecci);

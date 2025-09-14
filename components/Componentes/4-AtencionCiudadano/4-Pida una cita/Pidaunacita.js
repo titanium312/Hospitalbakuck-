@@ -1,4 +1,6 @@
 import { LitElement, html, css } from 'https://cdn.jsdelivr.net/npm/lit@3/+esm';
+import '../../herramienta/dictador.js';
+import { dictador } from '../../herramienta/dictador.js';
 
 export class Pidaunacita extends LitElement {
   static styles = css`
@@ -107,7 +109,7 @@ Ventanilla Única — Servicio de Información y Atención al Usuario.
 Horario: Lunes a viernes: 7:00 a.m. – 12:00 m / 2:00 p.m. – 6:00 p.m.
 
 CANAL TELEFÓNICO / WHATSAPP:
-(604) 7705083
+3147989334
 Línea transparencia
 
 CANAL VIRTUAL
@@ -120,8 +122,10 @@ Buzón físico en Ventanilla Única — Radicación presencial o formulario en l
 
   /* ===== Derivados útiles (no alteran el texto) ===== */
   get _telefono(){
-    const m = this._contenido.match(/\(\s*\d+\s*\)\s*\d+/) || this._contenido.match(/\+?\d[\d\s-]{6,}/);
-    return m ? m[0].replace(/\s+/g,'').replace(/[()\-]/g,'') : '';
+    const re = /(?:\(\s*\d{2,4}\s*\)|\+?\d{1,4})[\s.-]*\d{3,4}[\s.-]?\d{3,4}/g;
+    const m = this._contenido.match(re);
+    if (!m || !m.length) return '';
+    return m[0].replace(/[^\d+]/g,'');
   }
   get _web(){ const m = this._contenido.match(/https?:\/\/\S+/); return m ? m[0] : ''; }
   get _emails(){ return Array.from(this._contenido.matchAll(/[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}/g)).map(x=>x[0]); }
@@ -134,93 +138,126 @@ Buzón físico en Ventanilla Única — Radicación presencial o formulario en l
   _resetFont(){ this.fontScale = 1; this.style.setProperty('--font-scale', '1'); }
   _toggleContrast(){ this.toggleAttribute('contrast', !this.hasAttribute('contrast')); }
 
+  /* ===== Texto para TTS ===== */
+  #ttsPasos(){
+    const pasos = [
+      'Paso 1. Identifique el servicio: elija el tipo de consulta: medicina general, prioritaria, odontología o laboratorio.',
+      'Paso 2. Autenticación: ingrese su número de documento y datos de contacto.',
+      'Paso 3. Fecha y horario: seleccione sede, profesional y horario disponible.',
+      'Paso 4. Requisitos y adjuntos: confirme autorizaciones u órdenes y adjunte soportes.',
+      'Paso 5. Confirmación: revise el resumen y confirme. Recibirá comprobante por correo o SMS.',
+      'Paso 6. Consulta o cancelación: con su documento y código puede gestionar su cita.'
+    ];
+    return pasos.join(' ');
+  }
+  #ttsCanales(){
+    // Lee exactamente el bloque de canales (texto íntegro)
+    return this._contenido;
+  }
+
   /* ===== Render ===== */
   render(){
     return html`
       <section>
         <div class="shell">
           <div class="wrap">
-            <div class="ribbon" aria-hidden="true"></div>
+            <!-- Barra global: lee todo el contenido visible dentro -->
+            <dictador-tts ui lang="es-CO" rate="1" pitch="1">
+              <div class="ribbon" aria-hidden="true"></div>
 
-            <div class="head">
-              <div>
-                <div class="crumbs" aria-label="Ubicación">
-                  <a href="/atencion-ciudadania">Atención al Ciudadano</a> · <strong>Pida una cita</strong>
+              <div class="head">
+                <div>
+                  <div class="crumbs" aria-label="Ubicación">
+                    <a href="/atencion-ciudadania">Atención al Ciudadano</a> · <strong>Pida una cita</strong>
+                  </div>
+                  <h1 class="title">Pida una cita</h1>
+                  <p class="subtitle">Solicitud de citas en línea — E.S.E. Hospital San Jorge de Ayapel</p>
                 </div>
-                <h1 class="title">Pida una cita</h1>
-                <p class="subtitle">Solicitud de citas en línea — E.S.E. Hospital San Jorge de Ayapel</p>
-              </div>
-              <div class="actions">
-                <a class="btn primary" href="${this.urls.solicitar}" aria-label="Solicitar cita ahora">${this._svgCalendar()}<span>Solicitar cita</span></a>
-                <a class="btn" href="${this.urls.consultar}" aria-label="Consultar o cancelar cita">${this._svgSearch()}<span>Consultar / Cancelar</span></a>
-                <a class="btn" href="${this.urls.requisitos}" aria-label="Requisitos y tiempos de atención">${this._svgInfo()}<span>Requisitos y tiempos</span></a>
-                <a class="btn" href="${this.urls.guiaPdf}" target="_blank" rel="noopener" aria-label="Guía paso a paso en PDF">${this._svgDownload()}<span>Guía PDF</span></a>
-              </div>
-            </div>
-
-            <div class="dash" aria-hidden="true"></div>
-
-            <!-- PASOS CLAROS -->
-            <div class="steps">
-              <h2>¿Cómo solicitar su cita?</h2>
-              <p class="lead">Siga estos pasos. Tenga a mano su documento de identidad y la información del servicio requerido.</p>
-
-              <div class="steps-grid">
-                ${this._step(1, 'Identifique el servicio', html`Elija el tipo de consulta (medicina general, prioritaria, odontología, laboratorio, etc.).`)}
-                ${this._step(2, 'Autenticación', html`Ingrese su número de documento y datos básicos de contacto (correo y/o celular).`)}
-                ${this._step(3, 'Fecha y horario', html`Seleccione la sede (si aplica), el profesional y el horario disponible.`)}
-                ${this._step(4, 'Requisitos y adjuntos', html`Confirme si requiere autorización, orden médica u otros soportes. Adjunte en PDF o imagen.`)}
-                ${this._step(5, 'Confirmación', html`Revise el resumen de su cita y confirme. Recibirá comprobante por correo/SMS.`)}
-                ${this._step(6, 'Consulta/Cancelación', html`Use su documento y código de cita para consultar o cancelar oportunamente.`)}
+                <div class="actions">
+                  <a class="btn primary" href="${this.urls.solicitar}" aria-label="Solicitar cita ahora" role="button">${this._svgCalendar()}<span>Solicitar cita</span></a>
+                  <a class="btn" href="${this.urls.consultar}" aria-label="Consultar o cancelar cita" role="button">${this._svgSearch()}<span>Consultar / Cancelar</span></a>
+                  <a class="btn" href="${this.urls.requisitos}" aria-label="Requisitos y tiempos de atención" role="button">${this._svgInfo()}<span>Requisitos y tiempos</span></a>
+                  <a class="btn" href="${this.urls.guiaPdf}" target="_blank" rel="noopener" aria-label="Guía paso a paso en PDF" role="button">${this._svgDownload()}<span>Guía PDF</span></a>
+                </div>
               </div>
 
-              <div class="cta-row" role="group" aria-label="Accesos rápidos">
-                <a class="btn primary" href="${this.urls.solicitar}">${this._svgCalendar()}<span>Iniciar solicitud</span></a>
-                <a class="btn secondary" href="${this.urls.consultar}">${this._svgSearch()}<span>Consultar / Cancelar</span></a>
+              <div class="dash" aria-hidden="true"></div>
+
+              <!-- PASOS CLAROS -->
+              <div class="steps">
+                <h2>¿Cómo solicitar su cita?</h2>
+                <p class="lead">Siga estos pasos. Tenga a mano su documento de identidad y la información del servicio requerido.</p>
+
+                <div class="cta-row" role="group" aria-label="Lectura por voz">
+                  <button class="btn secondary" type="button"
+                          @click=${() => dictador.dictar(this.#ttsPasos(), { lang:'es-CO' })}>
+                    🔊 Leer pasos
+                  </button>
+                  <button class="btn secondary" type="button"
+                          @click=${() => dictador.dictar(this.#ttsCanales(), { lang:'es-CO' })}>
+                    🔊 Leer canales
+                  </button>
+                </div>
+
+                <div class="steps-grid">
+                  ${this._step(1, 'Identifique el servicio', html`Elija el tipo de consulta (medicina general, prioritaria, odontología, laboratorio, etc.).`)}
+                  ${this._step(2, 'Autenticación', html`Ingrese su número de documento y datos básicos de contacto (correo y/o celular).`)}
+                  ${this._step(3, 'Fecha y horario', html`Seleccione la sede (si aplica), el profesional y el horario disponible.`)}
+                  ${this._step(4, 'Requisitos y adjuntos', html`Confirme si requiere autorización, orden médica u otros soportes. Adjunte en PDF o imagen.`)}
+                  ${this._step(5, 'Confirmación', html`Revise el resumen de su cita y confirme. Recibirá comprobante por correo/SMS.`)}
+                  ${this._step(6, 'Consulta/Cancelación', html`Use su documento y código de cita para consultar o cancelar oportunamente.`)}
+                </div>
+
+                <div class="cta-row" role="group" aria-label="Accesos rápidos">
+                  <a class="btn primary" href="${this.urls.solicitar}" role="button">${this._svgCalendar()}<span>Iniciar solicitud</span></a>
+                  <a class="btn secondary" href="${this.urls.consultar}" role="button">${this._svgSearch()}<span>Consultar / Cancelar</span></a>
+                </div>
               </div>
-            </div>
 
-            <div class="note" role="status" aria-live="polite">
-              <div>${this._svgInfo()}</div>
-              <div>
-                <strong>Tip:</strong> si no encuentra disponibilidad en línea, contacte nuestros canales telefónicos o virtuales. También puede acercarse a Ventanilla Única.
+              <div class="note" role="status" aria-live="polite">
+                <div>${this._svgInfo()}</div>
+                <div>
+                  <strong>Tip:</strong> si no encuentra disponibilidad en línea, contacte nuestros canales telefónicos o virtuales. También puede acercarse a Ventanilla Única.
+                  ${this._telefono ? html`&nbsp;Tel:&nbsp;<a href="tel:${this._telefono}">${this._telefono}</a>` : ''}
+                  ${this._web ? html`&nbsp;•&nbsp;Web:&nbsp;<a href="${this._web}" target="_blank" rel="noopener">${this._web}</a>` : ''}
+                </div>
               </div>
-            </div>
 
-            <!-- Herramientas -->
-            <div class="toolbar" aria-label="Herramientas de accesibilidad">
-              <button class="btn secondary" @click=${()=>this._copy(this._contenido)} title="Copiar información institucional">${this._svgCopy()}<span>Copiar info</span></button>
-              ${this._telefono ? html`<button class="btn secondary" @click=${()=>this._copy(this._telefono)} title="Copiar teléfono">${this._svgPhone()}<span>Copiar teléfono</span></button>`: ''}
-              ${this._emails.length ? html`<button class="btn secondary" @click=${()=>this._copy(this._emails.join(', '))} title="Copiar correos">${this._svgMail()}<span>Copiar correos</span></button>`: ''}
-              <button class="btn secondary" @click=${()=>window.print()} title="Imprimir">${this._svgPrint()}<span>Imprimir</span></button>
-              <button class="btn secondary" @click=${this._toggleContrast} title="Alto contraste">${this._svgContrast()}<span>Alto contraste</span></button>
-              <button class="btn secondary" @click=${this._incFont} title="Aumentar tamaño">A+</button>
-              <button class="btn secondary" @click=${this._resetFont} title="Restablecer tamaño">A∘</button>
-              <button class="btn secondary" @click=${this._decFont} title="Reducir tamaño">A−</button>
-            </div>
+              <!-- Herramientas -->
+              <div class="toolbar" aria-label="Herramientas de accesibilidad">
+                <button class="btn secondary" type="button" @click=${()=>this._copy(this._contenido)} title="Copiar información institucional">${this._svgCopy()}<span>Copiar info</span></button>
+                ${this._telefono ? html`<button class="btn secondary" type="button" @click=${()=>this._copy(this._telefono)} title="Copiar teléfono">${this._svgPhone()}<span>Copiar teléfono</span></button>`: ''}
+                ${this._emails.length ? html`<button class="btn secondary" type="button" @click=${()=>this._copy(this._emails.join(', '))} title="Copiar correos">${this._svgMail()}<span>Copiar correos</span></button>`: ''}
+                <button class="btn secondary" type="button" @click=${()=>window.print()} title="Imprimir">${this._svgPrint()}<span>Imprimir</span></button>
+                <button class="btn secondary" type="button" @click=${this._toggleContrast} title="Alto contraste">${this._svgContrast()}<span>Alto contraste</span></button>
+                <button class="btn secondary" type="button" @click=${this._incFont} title="Aumentar tamaño">A+</button>
+                <button class="btn secondary" type="button" @click=${this._resetFont} title="Restablecer tamaño">A∘</button>
+                <button class="btn secondary" type="button" @click=${this._decFont} title="Reducir tamaño">A−</button>
+              </div>
 
-            <!-- Contenido institucional íntegro -->
-            <div class="content">
-              <h3 class="sr-only">Información institucional (texto íntegro)</h3>
-              <div class="literal" id="texto-completo">${this._contenido}</div>
-            </div>
+              <!-- Contenido institucional íntegro -->
+              <div class="content">
+                <h3 class="sr-only">Información institucional (texto íntegro)</h3>
+                <div class="literal" id="texto-completo">${this._contenido}</div>
+              </div>
 
-            <!-- Fundamento legal -->
-            <div class="law">
-              <strong>Fundamento legal:</strong> Art. 14 del Decreto 2106 de 2019.
-              ${this.fundamentoUrl && this.fundamentoUrl !== '#' ? html` Consulte: <a href="${this.fundamentoUrl}" target="_blank" rel="noopener">ver norma</a>.` : ''}
-            </div>
+              <!-- Fundamento legal -->
+              <div class="law">
+                <strong>Fundamento legal:</strong> Art. 14 del Decreto 2106 de 2019.
+                ${this.fundamentoUrl && this.fundamentoUrl !== '#' ? html` Consulte: <a href="${this.fundamentoUrl}" target="_blank" rel="noopener">ver norma</a>.` : ''}
+              </div>
 
-            <!-- Evidencia (para QA/auditoría) -->
-            <div class="evid">
-              <strong>Evidencia:</strong>
-              <ul>
-                <li>URL de solicitud: <a href="${this.urls.solicitar}">${this.urls.solicitar}</a></li>
-                <li>URL de consulta/cancelación: <a href="${this.urls.consultar}">${this.urls.consultar}</a></li>
-                <li>Requisitos y tiempos: <a href="${this.urls.requisitos}">${this.urls.requisitos}</a></li>
-                <li>Guía paso a paso (PDF): <a href="${this.urls.guiaPdf}">${this.urls.guiaPdf}</a></li>
-              </ul>
-            </div>
+              <!-- Evidencia (para QA/auditoría) -->
+              <div class="evid">
+                <strong>Evidencia:</strong>
+                <ul>
+                  <li>URL de solicitud: <a href="${this.urls.solicitar}">${this.urls.solicitar}</a></li>
+                  <li>URL de consulta/cancelación: <a href="${this.urls.consultar}">${this.urls.consultar}</a></li>
+                  <li>Requisitos y tiempos: <a href="${this.urls.requisitos}">${this.urls.requisitos}</a></li>
+                  <li>Guía paso a paso (PDF): <a href="${this.urls.guiaPdf}">${this.urls.guiaPdf}</a></li>
+                </ul>
+              </div>
+            </dictador-tts>
           </div>
         </div>
 

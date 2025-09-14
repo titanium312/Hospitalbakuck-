@@ -1,11 +1,10 @@
 import { LitElement, html, css } from 'https://cdn.jsdelivr.net/npm/lit@3/+esm';
+import '../herramienta/dictador.js';
 
 /**
  * <servicios-hsja>
- * Componente Lit con CSS encapsulado (sin dependencias globales) que replica
- * el diseño y contenido del mockup original. Mantiene el texto EXACTO.
- * - Estética hospitalaria: blancos/azules, limpio y luminoso.
- * - Accesible: role="dialog", aria-modal, cerrar con ESC y clic afuera.
+ * Componente Lit con CSS encapsulado que mantiene el texto EXACTO.
+ * Ahora con dictador-tts envolviendo todo el contenido (sin cambiar estilos).
  */
 export class ServiciosHsja extends LitElement {
   static properties = {
@@ -74,7 +73,7 @@ export class ServiciosHsja extends LitElement {
   closeAll(){ this.openId = ''; }
   _backdropClick(e){ if (e.target === e.currentTarget) this.closeAll(); }
 
-  // --- ICONS (inline SVG para mantener encapsulación y evitar dependencias externas) ---
+  // --- ICONS ---
   ic(name){
     switch(name){
       case 'truck-medical': return html`<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h9v5h3l3 3h1v2h-1.18a3 3 0 1 1-5.64 0H9.82a3 3 0 1 1-5.64 0H3V6zm9 7V8H5v5h7zm-4-1H7V10h1V9h2v1h1v2H10v1H8v-1zM18 13l-2-2h-2v2h4z"/></svg>`;
@@ -96,32 +95,35 @@ export class ServiciosHsja extends LitElement {
   // --- TEMPLATE ---
   render(){
     return html`
-      <div class="wrap">
-        <h1>Servicios del HSJA</h1>
-        <div class="cards">
-          ${this._card('modalUrgencias', 'truck-medical', 'Urgencias')}
-          ${this._card('modalConsulta', 'user-md', 'Consulta Externa')}
-          ${this._card('modalPartos', 'baby', 'Sala de Partos')}
-          ${this._card('modalHosp', 'bed', 'Hospitalización')}
-          ${this._card('modalDiag', 'vials', 'Apoyo Diagnóstico')}
-          ${this._card('modalConexos', 'people-group', 'Servicios Conexos')}
+      <!-- ✅ dictador-tts envolviendo TODO el contenido -->
+      <dictador-tts ui lang="es-CO" rate="0.95" pitch="1" volume="1">
+        <div class="wrap">
+          <h1>Servicios del HSJA</h1>
+          <div class="cards">
+            ${this._card('modalUrgencias', 'truck-medical', 'Urgencias')}
+            ${this._card('modalConsulta', 'user-md', 'Consulta Externa')}
+            ${this._card('modalPartos', 'baby', 'Sala de Partos')}
+            ${this._card('modalHosp', 'bed', 'Hospitalización')}
+            ${this._card('modalDiag', 'vials', 'Apoyo Diagnóstico')}
+            ${this._card('modalConexos', 'people-group', 'Servicios Conexos')}
+          </div>
         </div>
-      </div>
 
-      <div class="wrap soft">
-        <h1>Programas Institucionales</h1>
-        <div class="programas-list">
-          ${this._prog('modalProgUrg', 'truck-medical', 'Programas en Urgencias')}
-          ${this._prog('modalProgHosp', 'bed', 'Programas en Hospitalización')}
-          ${this._prog('modalProgBucal', 'tooth', 'Programas de Salud Bucal')}
-          ${this._prog('modalProgLab', 'vial', 'Programas en Laboratorio Clínico')}
-          ${this._prog('modalProgFarm', 'pills', 'Programas de Farmacia')}
-          ${this._prog('modalProgEnf', 'user-nurse', 'Programas de Enfermería')}
-          ${this._prog('modalProgAmb', 'leaf', 'Programas Ambientales')}
+        <div class="wrap soft">
+          <h1>Programas Institucionales</h1>
+          <div class="programas-list">
+            ${this._prog('modalProgUrg', 'truck-medical', 'Programas en Urgencias')}
+            ${this._prog('modalProgHosp', 'bed', 'Programas en Hospitalización')}
+            ${this._prog('modalProgBucal', 'tooth', 'Programas de Salud Bucal')}
+            ${this._prog('modalProgLab', 'vial', 'Programas en Laboratorio Clínico')}
+            ${this._prog('modalProgFarm', 'pills', 'Programas de Farmacia')}
+            ${this._prog('modalProgEnf', 'user-nurse', 'Programas de Enfermería')}
+            ${this._prog('modalProgAmb', 'leaf', 'Programas Ambientales')}
+          </div>
         </div>
-      </div>
 
-      ${this._modals()}
+        ${this._modals()}
+      </dictador-tts>
     `;
   }
 

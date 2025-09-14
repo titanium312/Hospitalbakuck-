@@ -126,3 +126,5 @@ La estructura se articula en áreas estratégicas como Gestión de la Calidad, P
 }
 
 customElements.define('administracion-element', AdministracionElement);
+
+

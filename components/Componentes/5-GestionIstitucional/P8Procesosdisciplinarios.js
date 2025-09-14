@@ -1,4 +1,5 @@
 import { LitElement, html } from 'https://cdn.jsdelivr.net/npm/lit@3/+esm';
+import '../herramienta/dictador.js'; // ✅ agregado
 
 /**
  * <procesosdisciplinarios-view>
@@ -17,35 +18,38 @@ export class Procesosdisciplinarios extends LitElement {
 
     return html`
       ${this.#styles()}
-      <section class="w-100 bg-white">
-        <!-- Encabezado con gradiente azul -->
-        <header class="pd-banner w-100 pv4 pv5-ns ph3 ph4-ns tc animate-fade-in">
-          <h1 class="pd-title f2 f1-ns fw7 ma0">Ruta de Procesos Disciplinarios</h1>
-          <h2 class="white-90 f5 f4-ns fw6 mt2 mb0">Control Interno – Componente MIPG</h2>
-        </header>
+      <!-- ✅ envuelto en dictador-tts para lectura en voz alta -->
+      <dictador-tts ui lang="es-CO" rate="0.95" pitch="1" volume="1">
+        <section class="w-100 bg-white">
+          <!-- Encabezado con gradiente azul -->
+          <header class="pd-banner w-100 pv4 pv5-ns ph3 ph4-ns tc animate-fade-in">
+            <h1 class="pd-title f2 f1-ns fw7 ma0">Ruta de Procesos Disciplinarios</h1>
+            <h2 class="white-90 f5 f4-ns fw6 mt2 mb0">Control Interno – Componente MIPG</h2>
+          </header>
 
-        <main class="w-100 ph3 ph5-ns pv4">
-          <!-- Contenedor de pasos: usa todo el ancho -->
-          <div class="flex flex-column items-center justify-center">
-            <div class="pd-flow w-100 center">
-              ${steps.map((step, index) => html`
-                <div class="pd-node animate-slide-up">
-                  <div class="pd-card pa3 pa4-ns tc">
-                    <div class="f2 mb2">${step.icon}</div>
-                    <h3 class="pd-h3 mt1 mb2">${step.title}</h3>
-                    <p class="mid-gray f6 lh-copy ma0">${step.description}</p>
+          <main class="w-100 ph3 ph5-ns pv4">
+            <!-- Contenedor de pasos: usa todo el ancho -->
+            <div class="flex flex-column items-center justify-center">
+              <div class="pd-flow w-100 center">
+                ${steps.map((step, index) => html`
+                  <div class="pd-node animate-slide-up">
+                    <div class="pd-card pa3 pa4-ns tc">
+                      <div class="f2 mb2">${step.icon}</div>
+                      <h3 class="pd-h3 mt1 mb2">${step.title}</h3>
+                      <p class="mid-gray f6 lh-copy ma0">${step.description}</p>
+                    </div>
+                    ${index < steps.length - 1 ? html`<div class="pd-arrow">➔</div>` : null}
                   </div>
-                  ${index < steps.length - 1 ? html`<div class="pd-arrow">➔</div>` : null}
-                </div>
-              `)}
+                `)}
+              </div>
             </div>
-          </div>
 
-          <footer class="tc mt5 mid-gray f6">
-            <p class="ma0">E.S.E. Hospital San Jorge de Ayapel – Transparencia y Control Interno</p>
-          </footer>
-        </main>
-      </section>
+            <footer class="tc mt5 mid-gray f6">
+              <p class="ma0">E.S.E. Hospital San Jorge de Ayapel – Transparencia y Control Interno</p>
+            </footer>
+          </main>
+        </section>
+      </dictador-tts>
     `;
   }
 

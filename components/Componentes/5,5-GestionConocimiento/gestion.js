@@ -1,5 +1,5 @@
 import { LitElement, html, css } from 'https://cdn.jsdelivr.net/npm/lit@3/+esm';
-
+import  '../herramienta/dictador.js'
 /**
  * <gestion-x></gestion-x>
  *
@@ -263,25 +263,28 @@ export class GestionConocimientoHsja extends LitElement {
 
   render() {
     return html`
-      <section class="wrap" aria-label="Gestión del Conocimiento">
-        <h1>Gestión del Conocimiento</h1>
+      <!-- ✅ wrapper de lectura en voz alta, sin tocar estilos -->
+      <dictador-tts ui lang="es-CO" rate="0.95" pitch="1" volume="1">
+        <section class="wrap" aria-label="Gestión del Conocimiento">
+          <h1>Gestión del Conocimiento</h1>
 
-        ${this._agradecimiento()}
+          ${this._agradecimiento()}
 
-        <div class="cards" role="list">
-          ${this._card('modal1', 'code', 'Cambios en la Página Web')}
-          ${this._card('modal2', 'doc', 'Documentación y Procedimientos')}
-          ${this._card('modal3', 'gears', 'Innovación y Tecnología')}
-          ${this._card('modal4', 'users', 'Participación y Retroalimentación')}
-          ${this._card('modal5', 'news', 'Boletines y Noticias del Conocimiento')}
-        </div>
-      </section>
+          <div class="cards" role="list">
+            ${this._card('modal1', 'code', 'Cambios en la Página Web')}
+            ${this._card('modal2', 'doc', 'Documentación y Procedimientos')}
+            ${this._card('modal3', 'gears', 'Innovación y Tecnología')}
+            ${this._card('modal4', 'users', 'Participación y Retroalimentación')}
+            ${this._card('modal5', 'news', 'Boletines y Noticias del Conocimiento')}
+          </div>
+        </section>
 
-      ${this._modal('modal1')}
-      ${this._modal('modal2')}
-      ${this._modal('modal3')}
-      ${this._modal('modal4')}
-      ${this._modal('modal5')}
+        ${this._modal('modal1')}
+        ${this._modal('modal2')}
+        ${this._modal('modal3')}
+        ${this._modal('modal4')}
+        ${this._modal('modal5')}
+      </dictador-tts>
     `;
   }
 }

@@ -1,12 +1,57 @@
 // Componentes/3-QuieneSomos/1-InformacionCorporativa/InformacionCorporativa.js
 import { LitElement, html } from 'https://cdn.jsdelivr.net/npm/lit@3/+esm';
+import { dictador } from '../../herramienta/dictador.js'; // <-- NUEVO
+import '../../herramienta/contador/visit-counter.js'; 
+
 
 class InformacionCorporativa extends LitElement {
-  // Light DOM para que apliquen estilos globales
   createRenderRoot(){ return this; }
 
+  // ======== Utilidades de UI ========
   #chip(text){ return html`<span class="inline-flex items-center br-pill ba b--blue bg-washed-blue ph3 pv1 f7 fw6 dark-blue">${text}</span>`; }
   #dot(){ return html`<span class="mt1 br-100 bg-blue" style="width:.5rem;height:.5rem;display:inline-block;"></span>`; }
+
+  // Estado local opcional (si quieres deshabilitar botones mientras habla)
+  #isSpeaking = false;
+  connectedCallback(){
+    super.connectedCallback();
+    // Suscríbete a cambios del dictador
+    dictador.onEstado(({ isSpeaking }) => {
+      this.#isSpeaking = !!isSpeaking;
+      this.requestUpdate();
+    });
+  }
+
+  #botonDictar(texto){
+    return html`
+      <button 
+        class="ml2 f7 ba br2 pv1 ph2 bg-light-blue dark-blue pointer dim"
+        ?disabled=${this.#isSpeaking}
+        @click=${() => dictador.dictar(texto)}
+        title="Dictar este bloque"
+      >
+        🔊 Escuchar
+      </button>
+    `;
+  }
+
+  #botonDetener(){
+    return html`
+      <button 
+        class="ml2 f7 ba br2 pv1 ph2 bg-light-red dark-red pointer dim"
+        ?disabled=${!this.#isSpeaking}
+        @click=${() => dictador.detener()}
+        title="Detener la lectura"
+      >
+        ⏹️ Detener
+      </button>
+    `;
+  }
+
+  // Convierte arrays en un único texto legible con pausas sutiles
+  #textoLista(lista){
+    return lista.map(i => (typeof i === 'string' ? i : `${i.t}. ${i.d}`)).join('. ');
+  }
 
   render(){
     const funciones = [
@@ -73,9 +118,29 @@ class InformacionCorporativa extends LitElement {
       'Sostenibilidad financiera y administrativa que respalde la misión.',
     ];
 
+    // Textos para dictado por sección
+    const tBienvenida = 'Hospital San Jorge de Ayapel. Bienvenidos a nuestra página web. Somos una E S E de primer nivel, cercana a la gente, que presta servicios de baja complejidad con calidad, seguridad y calidez humana.';
+    const tQuienes = 'Quiénes somos. Estamos comprometidos con la salud y la vida de cada habitante del municipio y su área de influencia. Fuimos creados por el Acuerdo número 002 del 14 de febrero de 1991 y reestructurados por el Decreto 104 de 1995 como la E S E Hospital San Jorge de Ayapel. Nuestra razón de ser son las personas: niños, jóvenes, adultos y adultos mayores. Contamos con talento humano competente y comprometido, que trabaja con vocación de servicio, responsabilidad y amor por la comunidad.';
+    const tDivision = 'División de nuestro municipio, Ayapel. Corregimientos: 10. Población 2025: 49 mil 53. Veredas: 47. Acercamos nuestros servicios a las zonas rurales para reducir barreras de acceso y llevar salud donde más se necesita.';
+    const tMision = 'Misión. Proporcionar atención médica de alta calidad y accesible a todos los pacientes, sin importar su condición. Brindamos un servicio humano y compasivo, utilizando la tecnología y los recursos de manera eficiente para mejorar la salud y el bienestar de nuestra comunidad.';
+    const tVision = 'Visión 2030. Ser un hospital líder en la región, reconocido por la excelencia en atención médica, investigación y educación; un modelo de atención sanitaria pública que genere confianza y satisfacción en pacientes y familias.';
+    const tFunciones = 'Funciones generales. ' + this.#textoLista(funciones);
+    const tDeberesUsuarios = 'Deberes con usuarios y comunidad. ' + this.#textoLista(deberesUsuarios);
+    const tDeberesEstado = 'Deberes con el Estado y el talento humano. ' + this.#textoLista(deberesEstado);
+    const tValores = 'Valores corporativos. ' + this.#textoLista(valores);
+    const tPrincipios = 'Principios de la gestión pública. ' + this.#textoLista(principios);
+    const tPropuesta = 'Propuesta de valor. Reconocemos los riesgos en salud de nuestra población y los institucionales. ' + this.#textoLista(propuesta);
+    const tCadena = 'Cadena de valor hospitalaria. ' + this.#textoLista(cadenaValor);
+    const tPolitica = 'Política de calidad. Como institución pública de primer nivel, nos comprometemos con servicios integrales, seguros, humanizados y centrados en el paciente y su familia; garantizamos accesibilidad, continuidad y oportunidad, con eficiencia, transparencia, equidad y sostenibilidad. ' + this.#textoLista(politicaCalidad);
+
+    const tTodo = [
+      tBienvenida, tQuienes, tDivision, tMision, tVision, tFunciones,
+      tDeberesUsuarios, tDeberesEstado, tValores, tPrincipios,
+      tPropuesta, tCadena, tPolitica
+    ].join(' ');
+
     return html`
       <style>
-        /* Degradados y efectos mínimos sin @import */
         .bg-grad { background: linear-gradient(to bottom, rgba(239,246,255,.7), #fff, rgba(239,246,255,.7)); }
         .blurball { filter: blur(36px); opacity: .4; }
         .ring { box-shadow: 0 0 0 1px rgba(29,78,216,.15) inset, 0 8px 20px rgba(2, 8, 20, .06); }
@@ -83,18 +148,33 @@ class InformacionCorporativa extends LitElement {
         .dot { width:.5rem;height:.5rem;display:inline-block;border-radius:9999px;background:#2563eb; }
         .divider { height:.35rem; width:7rem; border-radius:9999px; background: linear-gradient(90deg, rgba(56,189,248,.3), rgba(14,165,233,.7), rgba(56,189,248,.3)); }
         .vignette { position:absolute; left:0; right:0; bottom:0; height:4rem; background: linear-gradient(to top, #fff, transparent); pointer-events:none; }
+        .tts-toolbar { position: sticky; top: .5rem; z-index: 5; display:flex; gap:.5rem; justify-content:center; }
       </style>
 
       <section class="relative w-100 bg-grad">
-        <!-- decor sutil -->
         <div class="absolute top--3 right--3 w5 h5 br-100 bg-light-blue blurball" aria-hidden="true"></div>
         <div class="absolute bottom--3 left--2 w6 h6 br-100 bg-washed-blue blurball" aria-hidden="true"></div>
 
         <div class="center w-100 mw8 ph3 ph4-ns pv4 pv5-ns relative z-1">
-          <!-- Intro -->
+
+
+             <visit-counter component="R-P"></visit-counter>
+
+
+          <div class="tts-toolbar">
+            <button class="f6 ba br2 pv2 ph3 bg-blue white pointer dim"
+                    ?disabled=${this.#isSpeaking}
+                    @click=${() => dictador.dictar(tTodo)}
+                    title="Dictar toda la página">🔊 Dictar todo</button>
+            ${this.#botonDetener()}
+          </div>
+
           <header class="tc">
             ${this.#chip('Plataforma Estratégica')}
-            <h1 class="mt3 f2 f1-ns fw8 dark-gray">Hospital San Jorge de Ayapel</h1>
+            <h1 class="mt3 f2 f1-ns fw8 dark-gray">
+              Hospital San Jorge de Ayapel
+              ${this.#botonDictar(tBienvenida)}
+            </h1>
             <p class="mt3 center measure-wide mid-gray">
               Bienvenidos a nuestra página web. Somos una ESE de primer nivel, cercana a la gente, que presta servicios de baja complejidad con calidad, seguridad y calidez humana.
             </p>
@@ -106,7 +186,10 @@ class InformacionCorporativa extends LitElement {
           <section class="mt4 mt5-ns">
             <div class="cf">
               <div class="fl w-100 w-60-l pr0 pr4-l">
-                <h2 class="f3 f2-ns fw8 dark-gray">Quiénes somos</h2>
+                <h2 class="f3 f2-ns fw8 dark-gray">
+                  Quiénes somos
+                  ${this.#botonDictar(tQuienes)}
+                </h2>
                 <p class="mt3 mid-gray">
                   Estamos comprometidos con la salud y la vida de cada habitante del municipio y su área de influencia. Fuimos creados por el Acuerdo N.º 002 del 14 de febrero de 1991 y reestructurados por el Decreto 104 de 1995 como la ESE Hospital San Jorge de Ayapel.
                 </p>
@@ -117,7 +200,10 @@ class InformacionCorporativa extends LitElement {
 
               <aside class="fl w-100 w-40-l mt3 mt0-l">
                 <div class="card ring pa3 pa4-ns">
-                  <h3 class="f5 fw7 dark-blue">Divicion de nuestro municipio Ayapel</h3>
+                  <h3 class="f5 fw7 dark-blue">
+                    División de nuestro municipio Ayapel
+                    ${this.#botonDictar(tDivision)}
+                  </h3>
                   <div class="mt3 cf">
                     <div class="fl w-50 pa2">
                       <div class="tc br3 bg-washed-blue pa3 ring">
@@ -150,7 +236,10 @@ class InformacionCorporativa extends LitElement {
           <section class="mt4 mt5-ns flex-ns flex-wrap-ns">
             <div class="w-100 w-50-ns pr0 pr3-ns">
               <div class="card ring pa4">
-                <h2 class="f4 f3-ns fw8 dark-blue">Misión</h2>
+                <h2 class="f4 f3-ns fw8 dark-blue">
+                  Misión
+                  ${this.#botonDictar(tMision)}
+                </h2>
                 <p class="mt2 mid-gray">
                   Proporcionar atención médica de alta calidad y accesible a todos los pacientes, sin importar su condición. Brindamos un servicio humano y compasivo, utilizando la tecnología y los recursos de manera eficiente para mejorar la salud y el bienestar de nuestra comunidad.
                 </p>
@@ -158,7 +247,10 @@ class InformacionCorporativa extends LitElement {
             </div>
             <div class="w-100 w-50-ns pl0 pl3-ns mt3 mt0-ns">
               <div class="card ring pa4">
-                <h2 class="f4 f3-ns fw8 dark-blue">Visión 2030</h2>
+                <h2 class="f4 f3-ns fw8 dark-blue">
+                  Visión 2030
+                  ${this.#botonDictar(tVision)}
+                </h2>
                 <p class="mt2 mid-gray">
                   Ser un hospital líder en la región, reconocido por la excelencia en atención médica, investigación y educación; un modelo de atención sanitaria pública que genere confianza y satisfacción en pacientes y familias.
                 </p>
@@ -168,7 +260,10 @@ class InformacionCorporativa extends LitElement {
 
           <!-- Funciones -->
           <section class="mt5">
-            <h2 class="f3 f2-ns fw8 dark-gray">Funciones Generales</h2>
+            <h2 class="f3 f2-ns fw8 dark-gray">
+              Funciones Generales
+              ${this.#botonDictar(tFunciones)}
+            </h2>
             <ul class="mt3 list pl0">
               ${funciones.map(txt => html`
                 <li class="flex items-start mt2">
@@ -182,7 +277,10 @@ class InformacionCorporativa extends LitElement {
           <!-- Deberes -->
           <section class="mt5 cf">
             <div class="fl w-100 w-50-ns pr0 pr3-ns">
-              <h2 class="f3 f2-ns fw8 dark-gray">Deberes con usuarios y comunidad</h2>
+              <h2 class="f3 f2-ns fw8 dark-gray">
+                Deberes con usuarios y comunidad
+                ${this.#botonDictar(tDeberesUsuarios)}
+              </h2>
               <ul class="mt3 list pl0">
                 ${deberesUsuarios.map(txt => html`
                   <li class="flex items-start mt2">
@@ -193,7 +291,10 @@ class InformacionCorporativa extends LitElement {
               </ul>
             </div>
             <div class="fl w-100 w-50-ns pl0 pl3-ns mt3 mt0-ns">
-              <h3 class="f3 fw8 dark-gray">Deberes con el Estado y el talento humano</h3>
+              <h3 class="f3 fw8 dark-gray">
+                Deberes con el Estado y el talento humano
+                ${this.#botonDictar(tDeberesEstado)}
+              </h3>
               <ul class="mt3 list pl0">
                 ${deberesEstado.map(txt => html`
                   <li class="flex items-start mt2">
@@ -207,7 +308,10 @@ class InformacionCorporativa extends LitElement {
 
           <!-- Valores -->
           <section class="mt5">
-            <h2 class="f3 f2-ns fw8 dark-gray">Valores Corporativos</h2>
+            <h2 class="f3 f2-ns fw8 dark-gray">
+              Valores Corporativos
+              ${this.#botonDictar(tValores)}
+            </h2>
             <div class="mt3 cf">
               ${valores.map(v => html`
                 <article class="fl w-100 w-50-m w-33-l pa2">
@@ -222,7 +326,10 @@ class InformacionCorporativa extends LitElement {
 
           <!-- Principios -->
           <section class="mt5">
-            <h2 class="f3 f2-ns fw8 dark-gray">Principios de la gestión pública</h2>
+            <h2 class="f3 f2-ns fw8 dark-gray">
+              Principios de la gestión pública
+              ${this.#botonDictar(tPrincipios)}
+            </h2>
             <div class="mt3 cf">
               ${principios.map(p => html`
                 <div class="fl w-50-m w-33-l pa2">
@@ -235,7 +342,10 @@ class InformacionCorporativa extends LitElement {
           <!-- Propuesta de valor -->
           <section class="mt5 cf">
             <div class="fl w-100 w-60-l pr0 pr4-l">
-              <h2 class="f3 f2-ns fw8 dark-gray">Propuesta de valor</h2>
+              <h2 class="f3 f2-ns fw8 dark-gray">
+                Propuesta de valor
+                ${this.#botonDictar(tPropuesta)}
+              </h2>
               <p class="mt2 mid-gray">
                 Reconocemos los riesgos en salud de nuestra población y los institucionales. Para responder, proponemos un modelo de atención centrado en el paciente y su familia, gestión del riesgo, red integrada de servicios, innovación y telemedicina, y seguridad del paciente.
               </p>
@@ -250,7 +360,10 @@ class InformacionCorporativa extends LitElement {
             </div>
             <aside class="fl w-100 w-40-l mt3 mt0-l">
               <div class="card ring pa4">
-                <h3 class="f5 fw7 dark-blue">Cadena de valor hospitalaria</h3>
+                <h3 class="f5 fw7 dark-blue">
+                  Cadena de valor hospitalaria
+                  ${this.#botonDictar(tCadena)}
+                </h3>
                 <ul class="mt3 list pl0">
                   ${cadenaValor.map(txt => html`
                     <li class="flex items-start mt2">
@@ -265,7 +378,10 @@ class InformacionCorporativa extends LitElement {
 
           <!-- Política de calidad -->
           <section class="mt5">
-            <h2 class="f3 f2-ns fw8 dark-gray">Política de Calidad</h2>
+            <h2 class="f3 f2-ns fw8 dark-gray">
+              Política de Calidad
+              ${this.#botonDictar(tPolitica)}
+            </h2>
             <p class="mt2 mid-gray">
               Como institución pública de primer nivel, nos comprometemos con servicios integrales, seguros, humanizados y centrados en el paciente y su familia; garantizamos accesibilidad, continuidad y oportunidad, con eficiencia, transparencia, equidad y sostenibilidad.
             </p>

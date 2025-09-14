@@ -1,4 +1,6 @@
 import { LitElement, html } from 'https://cdn.jsdelivr.net/npm/lit@3/+esm';
+// Importa el web component del dictador (ajusta la ruta si es necesario)
+import '../herramienta/dictador.js';
 
 export class TratamientodeDatos extends LitElement {
   // Light DOM para compatibilidad con Tachyons y estilos globales
@@ -18,9 +20,7 @@ export class TratamientodeDatos extends LitElement {
       views: 18,
     };
 
-    return html`
-    <!-- SEO estructurado: CreativeWork + MediaObject -->
-    <script type="application/ld+json">${JSON.stringify({
+    const jsonLd = {
       '@context': 'https://schema.org',
       '@type': 'CreativeWork',
       name: 'Documento aviso tratamiento de datos personales',
@@ -36,70 +36,77 @@ export class TratamientodeDatos extends LitElement {
         contentSize: file.size,
       },
       interactionStatistic: [
-        { '@type': 'InteractionCounter', interactionType: 'https://schema.org/DownloadAction', userInteractionCount: file.downloads },
-        { '@type': 'InteractionCounter', interactionType: 'https://schema.org/InteractionCounter', userInteractionCount: file.views },
+        { '@type': 'InteractionCounter', interactionType: { '@type': 'DownloadAction' }, userInteractionCount: file.downloads },
+        { '@type': 'InteractionCounter', interactionType: { '@type': 'ViewAction' }, userInteractionCount: file.views },
       ],
-    })}</script>
+    };
 
-    <style>
-      :host { color: #0f172a; }
-      .card { background: #fff; border: 1px solid rgba(2,8,23,0.06); border-radius: 1rem; box-shadow: 0 4px 24px rgba(2,8,23,0.06); }
-      .title { letter-spacing: -0.01em; }
-      .meta dt { color: #475569; }
-      .badge { display: inline-flex; align-items: center; gap: .375rem; font-weight: 600; border-radius: 999px; padding: .375rem .75rem; background: #f1f5f9; color: #0f172a; border: 1px solid rgba(2,8,23,0.06); }
-      .btn { display: inline-flex; align-items: center; gap: .5rem; text-decoration: none; }
-      .btn:focus-visible { outline: 3px solid #94a3b8; outline-offset: 3px; border-radius: .5rem; }
-      .divider { height: 1px; background: rgba(2,8,23,0.06); }
-      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
-    </style>
+    return html`
+      <script type="application/ld+json">${JSON.stringify(jsonLd)}</script>
 
-    <section class="pa3 pa4-ns">
-      <header class="mb3 mb4-ns">
-        <h2 class="title f3 f2-ns mt0 mb2">Documento aviso tratamiento de datos personales</h2>
-        <p class="f5 lh-copy measure mv0 mid-gray">Listado de documentos</p>
-      </header>
+      <style>
+        :host { color: #0f172a; }
+        .card { background: #fff; border: 1px solid rgba(2,8,23,0.06); border-radius: 1rem; box-shadow: 0 4px 24px rgba(2,8,23,0.06); }
+        .title { letter-spacing: -0.01em; }
+        .meta dt { color: #475569; }
+        .badge { display: inline-flex; align-items: center; gap: .375rem; font-weight: 600; border-radius: 999px; padding: .375rem .75rem; background: #f1f5f9; color: #0f172a; border: 1px solid rgba(2,8,23,0.06); }
+        .btn { display: inline-flex; align-items: center; gap: .5rem; text-decoration: none; }
+        .btn:focus-visible { outline: 3px solid #94a3b8; outline-offset: 3px; border-radius: .5rem; }
+        .divider { height: 1px; background: rgba(2,8,23,0.06); }
+        .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+      </style>
 
-      <article class="card pa3 pa4-ns">
-        <div class="flex items-center justify-between flex-column flex-row-ns gap2">
-          <div class="w-100">
-            <div class="flex items-center gap2 mb2">
-              <span class="badge mono" title="Tamaño del archivo">PDF · ${file.size}</span>
-              <span class="badge" title="Tipo de documento">${file.type}</span>
-              <span class="badge" title="Categoría">${file.category}</span>
+      <!-- Dictador TTS con barra de control visible -->
+      <dictador-tts ui lang="es-CO" rate="0.95" pitch="1" volume="1">
+        <section class="pa3 pa4-ns">
+          <header class="mb3 mb4-ns">
+            <h2 class="title f3 f2-ns mt0 mb2">Documento aviso tratamiento de datos personales</h2>
+            <p class="f5 lh-copy measure mv0 mid-gray">Listado de documentos</p>
+          </header>
+
+          <article class="card pa3 pa4-ns">
+            <div class="flex items-center justify-between flex-column flex-row-ns gap2">
+              <div class="w-100">
+                <div class="flex items-center gap2 mb2">
+                  <span class="badge mono" title="Tamaño del archivo">PDF · ${file.size}</span>
+                  <span class="badge" title="Tipo de documento">${file.type}</span>
+                  <span class="badge" title="Categoría">${file.category}</span>
+                </div>
+                <h3 class="f4 mv2">${file.name}</h3>
+                <p class="mid-gray mv0">${file.description}</p>
+              </div>
+
+              <div class="mt3 mt0-ns flex items-center gap2">
+                <a class="btn pv3 ph4 br2 bg-dark-blue white b"
+                   href="${file.url}" target="_blank" rel="noopener noreferrer" download
+                   aria-label="Descargar ${file.name} como PDF">
+                  ${this._icon('download')} Descargar PDF
+                </a>
+                <a class="btn pv3 ph4 br2 ba b--black-10 bg-near-white dark-blue"
+                   href="${file.url}" target="_blank" rel="noopener noreferrer"
+                   aria-label="Abrir ${file.name} en el navegador">
+                  ${this._icon('eye')} Ver en el navegador
+                </a>
+              </div>
             </div>
-            <h3 class="f4 mv2">${file.name}</h3>
-            <p class="mid-gray mv0">${file.description}</p>
-          </div>
 
-          <div class="mt3 mt0-ns flex items-center gap2">
-            <a class="btn pv3 ph4 br2 bg-dark-blue white b" href="${file.url}" target="_blank" rel="noopener noreferrer" download>
-              ${this._icon('download')} Descargar PDF
-            </a>
-            <a class="btn pv3 ph4 br2 ba b--black-10 bg-near-white dark-blue" href="${file.url}" target="_blank" rel="noopener noreferrer">
-              ${this._icon('eye')} Ver en el navegador
-            </a>
-          </div>
-        </div>
+            <div class="divider mv3"></div>
 
-        <div class="divider mv3"></div>
+            <dl class="meta f6 lh-copy mt0 flex flex-wrap">
+              <dt class="w-100 w-30-ns gray">Fechas</dt>
+              <dd class="w-100 w-70-ns mv0">
+                Expedición: 25/05/2020 <span class="mh2">|</span> Publicación: 18/07/2024
+              </dd>
 
-        <dl class="meta f6 lh-copy mt0 flex flex-wrap">
-          <dt class="w-100 w-30-ns gray">Fechas</dt>
-          <dd class="w-100 w-70-ns mv0">Expedición: 25/05/2020 <span class="mh2">|</span> Publicación: 18/07/2024</dd>
-
-          <dt class="w-100 w-30-ns gray mt3">Descargas</dt>
-          <dd class="w-100 w-70-ns mv0 mt3">
-            <span class="badge" aria-label="Descargas totales">${this._icon('download')} ${file.downloads}</span>
-            <span class="badge ml2" aria-label="Visualizaciones totales">${this._icon('eye')} ${file.views}</span>
-          </dd>
-        </dl>
-      </article>
-
-      <footer class="mt3 mt4-ns">
-        <p class="f6 mid-gray mv2">Fuente: Ministerio de Tecnologías de la Información y las Comunicaciones</p>
-        <a class="link dark-blue underline-hover" href="${file.url}" target="_blank" rel="noopener noreferrer">${file.url}</a>
-      </footer>
-    </section>
+              <dt class="w-100 w-30-ns gray mt3">Actividad</dt>
+              <dd class="w-100 w-70-ns mv0 mt3">
+                <span class="badge" aria-label="Descargas totales">${this._icon('download')} ${file.downloads}</span>
+                <span class="badge ml2" aria-label="Visualizaciones totales">${this._icon('eye')} ${file.views}</span>
+              </dd>
+            </dl>
+          </article>
+        </section>
+      </dictador-tts>
     `;
   }
 

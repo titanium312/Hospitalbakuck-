@@ -71,7 +71,7 @@
         },
         portalEstado: {
           href: 'https://www.gov.co/',
-          src: 'https://cdn.www.gov.co/assets/images/Vertical-Color.png',
+          src: 'https://www.hgm.gov.co/info/hgm/media/bloque239.png',
           alt: 'Portal Único del Estado - GOV.CO'
         }
       };
@@ -188,20 +188,63 @@
               </p>
             </div>
 
-            <!-- Redes sociales oficiales -->
-            <div class="flex flex-wrap justify-center items-center gap ma0 pa0 mb4">
-              ${this.redes.map(r => html`
-                <a class="link white hover-light-blue br-pill ba b--white-30 ph3 pv2 mh1 mv1 flex items-center"
-                  href=${r.href} target="_blank" rel="noopener noreferrer" aria-label=${'Ir a ' + r.name}>
-                  ${this.#svg(r.icon)}
-                  <span class="ml2">${r.name}</span>
-                </a>
-              `)}
-            </div>
 
-            <div class="bt b--dark-blue pt3 light-blue">
-              <p class="ma0">© 2025 ${this.entidadNombre} • Ayapel, Córdoba, Colombia</p>
-            </div>
+<div class="mt4 pt3 f6 lh-copy tc white-80">
+  <!-- línea azul decorativa de 3cm -->
+  <div style="
+      width:3cm;
+      height:6px;
+      border-radius:4px;
+      background:linear-gradient(90deg,#2563eb,#1e40af,#2563eb);
+      margin:0 auto 1.5rem auto;">
+  </div>
+
+  <p class="ma0">
+    © ${new Date().getFullYear()} ${this.entidadNombre} • Ayapel, Córdoba, Colombia
+  </p>
+
+  <p class="mt2 mb1">
+    Dirección: ${this.contacto.canalesAtencion.fisicos}
+  </p>
+
+  <p class="mv1">
+    Conmutador:
+    <a href="tel:+576047705083" class="link light-blue underline-hover">
+      ${this.contacto.conmutador}
+    </a>
+    <span class="mh2 o-40">|</span>
+    Línea anticorrupción: ${this.contacto.lineaAnticorrupcion}
+  </p>
+
+  <p class="mv1">
+    Atención en línea:
+    <a class="link light-blue underline-hover"
+       href=${this.contacto.canalesAtencion.electronicos}
+       target="_blank" rel="noopener noreferrer">
+      Orientación al usuario
+    </a>
+  </p>
+
+  <p class="mv1">
+    Notificaciones judiciales:
+    <a class="link light-blue underline-hover"
+       href="mailto:${this.contacto.correoNotificaciones}">
+      ${this.contacto.correoNotificaciones}
+    </a>
+  </p>
+
+  <p class="mv1">
+    Código IPS: ${this.contacto.codigoIPS}
+    <span class="mh2 o-40">|</span>
+    NIT: ${this.contacto.nit}
+  </p>
+</div>
+
+
+
+
+
+
           </div>
         </section>
 

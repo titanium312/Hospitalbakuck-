@@ -1,11 +1,11 @@
 import { LitElement, html, css } from 'https://cdn.jsdelivr.net/npm/lit@3/+esm';
 import '../herramienta/lectopdf.js';
-
+import '../herramienta/dictador.js';
 /**
  * <metas-indicadores-view>
  *
  * - Shadow DOM activado (encapsulación total).
- * - "micro‑Tachyons" dentro del componente: utilidades más usadas (pa, pv, ph, br, bg, shadow, flex, items-center, etc.)
+ * - "micro-Tachyons" dentro del componente: utilidades más usadas (pa, pv, ph, br, bg, shadow, flex, items-center, etc.)
  * - Paleta limpia en celestes y blancos, estética hospitalaria.
  * - Tarjeta con borde suave, sombra aérea y hover sutil.
  * - Texto original intacto (no se cambia el copy del usuario).
@@ -32,7 +32,7 @@ export class DerechosdeAutor extends LitElement {
     *, *::before, *::after { box-sizing: border-box; }
     :host { display: block; color: var(--texto); font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; background: transparent; }
 
-    /* ===== micro‑Tachyons (subset) ===== */
+    /* ===== micro-Tachyons (subset) ===== */
     .pa2 { padding: .5rem; }
     .pa3 { padding: 1rem; }
     .pa4 { padding: 2rem; }
@@ -112,42 +112,37 @@ export class DerechosdeAutor extends LitElement {
 
   render() {
     return html`
-      <section class="bg-near-white pv3 pv4-ns">
-        <div class="container ph3 ph4-ns ph5-l">
-          <div class="hero pa3 pa4 br4">
-            <div class="flex items-center gap2 mb2">
-              <span class="heroIcon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" role="img" focusable="false" aria-label="Indicadores">
-                  <path d="M3 3h2v18H3V3zm16 10h2v8h-2v-8zM7 9h2v12H7V9zm8-6h2v18h-2V3zm-4 10h2v8h-2v-8z"/>
-                </svg>
-              </span>
-              <!-- Texto original del usuario (intacto) -->
-              <p class="mt0 mb0 f4 f3-ns dark-blue lh-copy">
-                Lineamientos para la protección de los contenidos institucionales, garantizando su uso legal y autorizado.
-              </p>
+      <!-- ✅ Agregado: dictador-tts como wrapper, sin tocar estilos -->
+      <dictador-tts ui lang="es-CO" rate="0.95" pitch="1" volume="1">
+        <section class="bg-near-white pv3 pv4-ns">
+          <div class="container ph3 ph4-ns ph5-l">
+            <div class="hero pa3 pa4 br4">
+              <div class="flex items-center gap2 mb2">
+                <span class="heroIcon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" role="img" focusable="false" aria-label="Indicadores">
+                    <path d="M3 3h2v18H3V3zm16 10h2v8h-2v-8zM7 9h2v12H7V9zm8-6h2v18h-2V3zm-4 10h2v8h-2v-8z"/>
+                  </svg>
+                </span>
+                <!-- Texto original del usuario (intacto) -->
+                <p class="mt0 mb0 f4 f3-ns dark-blue lh-copy">
+                  Lineamientos para la protección de los contenidos institucionales, garantizando su uso legal y autorizado.
+                </p>
+              </div>
+              <p class="subtle mt2 mb0">Visualiza la matriz oficial directamente en el visor PDF integrado.</p>
             </div>
-            <p class="subtle mt2 mb0">Visualiza la matriz oficial directamente en el visor PDF integrado.</p>
-          </div>
-          <div class="hsja-card pa3 pa4 mt4">
-            <div class="viewer">
-              <lectot-wie
-                aria-label="PolÌtica de Derechos de Autor "
-                urlpdf="https://hospitalsanjorgeayapel.info/LectorPdf/pdfs/Pol%C3%ADtica%20de%20Derechos%20de%20Autor.pdf">
-              </lectot-wie>
+            <div class="hsja-card pa3 pa4 mt4">
+              <div class="viewer">
+                <lectot-wie
+                  aria-label="PolÌtica de Derechos de Autor "
+                  urlpdf="https://hospitalsanjorgeayapel.info/LectorPdf/pdfs/Pol%C3%ADtica%20de%20Derechos%20de%20Autor.pdf">
+                </lectot-wie>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </dictador-tts>
     `;
   }
 }
 
 customElements.define('derechosde-autor-view', DerechosdeAutor);
-
-
-
-
-
-
-
-
