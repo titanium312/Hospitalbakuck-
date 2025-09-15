@@ -1,29 +1,37 @@
 <!doctype html>
 <html lang="es">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Lit App Base</title>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lit App Base</title>
 
-  <!-- CSS utilitario tipo TACHYONS -->
-<link
+    <!-- CSS utilitario tipo TACHYONS -->
+    <link
       rel="stylesheet"
       href="https://unpkg.com/tachyons@4.12.0/css/tachyons.min.css"
     />
-</head>
-<body>
-  <cabecera-x></cabecera-x>
+  </head>
+  <body>
+    <cabecera-x></cabecera-x>
     <contenedor-app></contenedor-app>
-  <footer-app></footer-app>
+    <footer-app></footer-app>
 
-  <manti-chatbot></manti-chatbot>
+    <manti-chatbot></manti-chatbot>
 
-  <!-- Tus componentes -->
-  <script type="module" src="./components/Cabera-footer/1-cabezera.js"></script>
-  <script type="module" src="./components/Cabera-footer/footer-app.js"></script>
-  <script type="module" src="./components/x.js"></script>
+    <!-- Tus componentes -->
+    <script
+      type="module"
+      src="./components/cabecera-footer/cabecera-app.js"
+    ></script>
+    <script
+      type="module"
+      src="./components/cabecera-footer/footer-app.js"
+    ></script>
+    <script type="module" src="./components/x.js"></script>
 
-  <script type="module" src="./components/Componentes/herramienta/MantiChatbot.js"></script>
-</body>
+    <script
+      type="module"
+      src="./components/Componentes/herramienta/MantiChatbot.js"
+    ></script>
+  </body>
 </html>
-
