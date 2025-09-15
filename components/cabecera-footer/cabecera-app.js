@@ -1,8 +1,10 @@
-import { LitElement, html } from 'https://cdn.jsdelivr.net/npm/lit@3/+esm'
+import { LitElement, html } from "https://cdn.jsdelivr.net/npm/lit@3/+esm";
 
 class Cabecera extends LitElement {
   // Light DOM para que Tachyons (CSS global) aplique
-  createRenderRoot() { return this }
+  createRenderRoot() {
+    return this;
+  }
 
   render() {
     return html`
@@ -29,8 +31,8 @@ class Cabecera extends LitElement {
           </a>
         </div>
       </header>
-    `
+    `;
   }
 }
 
-customElements.define('cabecera-x', Cabecera)
+customElements.define("cabecera-x", Cabecera);
